@@ -4,3 +4,5 @@
 .Ruserdata
 
 venv/
+output/
+input/figure
