@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Plotnine: Grammar of Graphics for Python"
-tagline: 'An attempt to translate the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.'
+tagline: 'A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.'
 author: jeroen-janssens
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 type: tutorial
