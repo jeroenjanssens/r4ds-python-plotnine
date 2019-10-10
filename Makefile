@@ -1,17 +1,12 @@
-.PHONY: clean active test
+.PHONY: install clean version compile blog notebook
 
-install: venv requirements.txt
+install: requirements.txt
+	virtualenv --python=python3.7 venv
 	. venv/bin/activate; pip install -U pip
 	. venv/bin/activate; pip install -Ur requirements.txt
 
 clean:
 	rm -rf venv
-
-venv:
-	virtualenv --python=python3.7 venv
-
-active:
-	. venv/bin/activate
 
 version:
 	. venv/bin/activate; python -c 'import plotnine; print(plotnine.__version__)'
@@ -21,3 +16,6 @@ compile:
 
 blog:
 	bin/blog.sh
+
+notebook:
+	. venv/bin/activate; bin/notebook.sh

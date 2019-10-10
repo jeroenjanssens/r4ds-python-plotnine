@@ -6,3 +6,5 @@
 venv/
 output/
 input/figure
+
+.ipynb_checkpoints

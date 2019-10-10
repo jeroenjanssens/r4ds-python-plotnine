@@ -36,7 +36,7 @@ knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-
 > "The simple graph has brought more information to the data analyst’s mind 
 > than any other device." --- John Tukey
 
-This chapter will teach you how to visualise your data using plotnine. Python has several systems for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
+This chapter[^1] will teach you how to visualise your data using plotnine. Python has several systems for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
 
 If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading "The Layered Grammar of Graphics", <http://vita.had.co.nz/papers/layered-grammar.pdf>.
 
@@ -97,7 +97,7 @@ Among the variables in `mpg` are:
 
 To learn more about `mpg`, open its help page by running `?mpg`.
 
-### [3.2.2](https://r4ds.had.co.nz/data-visualisation.html#creating-a-ggplot)&nbsp;&nbsp;&nbsp;3.2.2 Creating a ggplot
+### [3.2.2](https://r4ds.had.co.nz/data-visualisation.html#creating-a-ggplot)&nbsp;&nbsp;&nbsp;Creating a ggplot
 
 To plot `mpg`, run this code to put `displ` on the x-axis and `hwy` on the y-axis:
 
@@ -119,8 +119,8 @@ Each geom function in plotnine takes a `mapping` argument. This defines how vari
 Let's turn this code into a reusable template for making graphs with plotnine. To make a graph, replace the bracketed sections in the code below with a dataset, a geom function, or a collection of mappings.
 
 ```{python eval=FALSE}
-ggplot(data=<DATA>) +\
-<GEOM_FUNCTION>(mapping=aes(<MAPPINGS>))
+# ggplot(data=<DATA>) +\
+# <GEOM_FUNCTION>(mapping=aes(<MAPPINGS>))
 ```
 
 The rest of this chapter will show you how to complete and extend this template to make different types of graphs. We will begin with the `<MAPPINGS>` component.
@@ -190,4 +190,8 @@ ggplot(data=mpg) +\
 geom_point(mapping=aes(x="displ", y="hwy", size="class"))
 ```
 
-Or we could have mapped `class` to the _alpha_ aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.
+Or we could have mapped[^2] `class` to the _alpha_ aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.
+
+
+[^1]: Or blog post of course.
+[^2]: A second footnote.
