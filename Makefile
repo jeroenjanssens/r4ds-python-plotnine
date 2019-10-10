@@ -13,5 +13,11 @@ venv:
 active:
 	. venv/bin/activate
 
-test:
+version:
 	. venv/bin/activate; python -c 'import plotnine; print(plotnine.__version__)'
+
+compile:
+	bin/compile.sh
+
+blog:
+	bin/blog.sh
