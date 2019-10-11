@@ -1,6 +1,13 @@
-.PHONY: install clean version compile blog notebook
+.PHONY: install clean version knit notebook blogpost
 
-install: requirements.txt
+RMD = input/plotnine.Rmd
+MD = output/plotnine.md
+IPYNB = notebook/r4ds-python-plotnine.ipynb
+
+install: venv
+
+venv: requirements.txt
+	rm -rf venv
 	virtualenv --python=python3.7 venv
 	. venv/bin/activate; pip install -U pip
 	. venv/bin/activate; pip install -Ur requirements.txt
@@ -11,11 +18,16 @@ clean:
 version:
 	. venv/bin/activate; python -c 'import plotnine; print(plotnine.__version__)'
 
-compile:
+output/plotnine.md: $(RMD)
 	bin/compile.sh
 
-blog:
-	bin/blog.sh
-
-notebook:
+notebook/r4ds-python-plotnine.ipynb: $(RMD)
 	. venv/bin/activate; bin/notebook.sh
+
+knit: $(MD)
+
+notebook: $(IPYNB)
+
+blogpost: knit
+	bin/blogpost.sh
+
