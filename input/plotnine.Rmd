@@ -36,7 +36,7 @@ knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-
 > "The simple graph has brought more information to the data analyst’s mind 
 > than any other device." --- John Tukey
 
-This chapter[^1] will teach you how to visualise your data using plotnine. Python has several systems for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
+This chapter will teach you how to visualise your data using plotnine. Python has several systems for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
 
 If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading "The Layered Grammar of Graphics", <http://vita.had.co.nz/papers/layered-grammar.pdf>.
 
@@ -62,7 +62,7 @@ rcParams.update({"figure.max_open_warning": 0,
 theme_set(theme_gray(base_size=13))
 ```
 
-That one line of code loads the core tidyverse; packages which you will use in almost every data analysis. It also tells you which functions from the tidyverse conflict with functions in base Python (or from other packages you might have loaded). 
+This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed.
 
 <!-- TODO: replace "tidyverse" and library -->
 If you run this code and get the error message "there is no package called ‘tidyverse’", you'll need to first install it, then run `library()` once again.
@@ -190,8 +190,5 @@ ggplot(data=mpg) +\
 geom_point(mapping=aes(x="displ", y="hwy", size="class"))
 ```
 
-Or we could have mapped[^2] `class` to the _alpha_ aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.
+Or we could have mapped `class` to the _alpha_ aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.
 
-
-[^1]: Or blog post of course.
-[^2]: A second footnote.
