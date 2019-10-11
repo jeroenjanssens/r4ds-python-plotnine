@@ -22,6 +22,8 @@ output:
 <!-- TODO: Mention that we're using the preview version of RStudio -->
 <!-- TODO: mention style: p9 vs * and +\ and (+) -->
 
+
+
 ```{r echo=FALSE}
 library(reticulate)
 use_virtualenv("../venv", required = TRUE)
@@ -36,20 +38,19 @@ knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-
 > "The simple graph has brought more information to the data analyst’s mind 
 > than any other device." --- John Tukey
 
-This chapter will teach you how to visualise your data using plotnine. Python has several systems for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
+This blog post will teach you how to visualise your data using plotnine. Python has many packages for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
 
-If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading "The Layered Grammar of Graphics", <http://vita.had.co.nz/papers/layered-grammar.pdf>.
-
+If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).  
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
-<!-- TODO: remove mentions of tidyverse -->
-This chapter focusses on plotnine, one of the core members of the tidyverse. To access the datasets, help pages, and functions that we will use in this chapter, load the tidyverse by running this code:
+This chapter focusses on plotnine. To access the datasets, help pages, and functions that we will use in this blog post, import the package by running this code:
 
 ```{python}
-import numpy as np
-import pandas as pd
 from plotnine import *
 from plotnine.data import *
+
+import numpy as np
+import pandas as pd
 from matplotlib import rcParams
 
 pd.set_option("display.max_rows", 10)
@@ -62,18 +63,13 @@ rcParams.update({"figure.max_open_warning": 0,
 theme_set(theme_gray(base_size=13))
 ```
 
-This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed.
+This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed. If you run this code and get the error message "ModuleNotFoundError: No module named 'plotnine'", you'll need to first install it, then run the code once again.
 
-<!-- TODO: replace "tidyverse" and library -->
-If you run this code and get the error message "there is no package called ‘tidyverse’", you'll need to first install it, then run `library()` once again.
-
-```{python eval=FALSE}
+```{text eval=FALSE}
 ! pip install plotnine[all]
 ```
 
 You only need to install a package once, but you need to reload it every time you start a new session.
-
-If we need to be explicit about where a function (or dataset) comes from, we'll use the special form `package::function()`. For example, `plotnine::ggplot()` tells you explicitly that we're using the `ggplot()` function from the plotnine package.
 
 ## [3.2](https://r4ds.had.co.nz/data-visualisation.html#first-steps)&nbsp;&nbsp;&nbsp;First steps
 
