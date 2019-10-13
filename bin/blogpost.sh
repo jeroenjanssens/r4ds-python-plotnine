@@ -11,7 +11,9 @@ if [ ! -d "$SITE/" ]; then
 fi
 
 rm -v $SITE/content/_posts/*-$NAME.md
-cat output/plotnine.md | sed -re "s;(figure/)|(images/);/assets/img/blog/${NAME}/;" > $FILE
+cat output/plotnine.md |
+    sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/r4ds-python-plotnine|.|g' |
+    sed -re "s;(figure/)|(images/);/assets/img/blog/${NAME}/;" > $FILE
 echo "Wrote $FILE"
 mkdir -p $SITE/assets/img/blog/$NAME/
 cp -v output/figure/* $SITE/assets/img/blog/$NAME/
