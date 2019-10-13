@@ -3,6 +3,8 @@
 .RData
 .Ruserdata
 
+renv/library
+
 venv/
 output/
 input/figure
