@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 mkdir -p output
-Rscript --vanilla -e 'knitr::knit("input/plotnine.Rmd", "output/plotnine.tmp.md")'
+Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("input/plotnine.Rmd", "output/plotnine.tmp.md")'
 rm -rf output/figure
 cp -Rv input/figure output
 cat output/plotnine.tmp.md |

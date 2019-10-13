@@ -30,6 +30,10 @@ use_virtualenv("../venv", required = TRUE)
 knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
 ```
 
+```{r}
+sessioninfo::session_info()
+```
+
 
 # [3](https://r4ds.had.co.nz/data-visualisation.html)&nbsp;&nbsp;&nbsp;Data visualisation
 
@@ -38,12 +42,12 @@ knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-
 > "The simple graph has brought more information to the data analyst’s mind 
 > than any other device." --- John Tukey
 
-This blog post will teach you how to visualise your data using plotnine. Python has many packages for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
+This post will teach you how to visualise your data using plotnine. Python has many packages for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
 
 If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).  
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
-This chapter focusses on plotnine. To access the datasets, help pages, and functions that we will use in this blog post, import the package by running this code:
+This post focusses on plotnine. To access the datasets, help pages, and functions that we will use in this post, import the package by running this code:
 
 ```{python}
 from plotnine import *
@@ -63,7 +67,7 @@ rcParams.update({"figure.max_open_warning": 0,
 theme_set(theme_gray(base_size=13))
 ```
 
-This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed. If you run this code and get the error message "ModuleNotFoundError: No module named 'plotnine'", you'll need to first install it, then run the code once again.
+This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed. If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
 ```{text eval=FALSE}
 ! pip install plotnine[all]
@@ -77,7 +81,7 @@ Let's use our first graph to answer a question: Do cars with big engines use mor
 
 ### [3.2.1](https://r4ds.had.co.nz/data-visualisation.html#the-mpg-data-frame)&nbsp;&nbsp;&nbsp;The `mpg` DataFrame
 
-You can test your answer with the `mpg` __DataFrame__ found in plotnine (aka  `plotnine::mpg`). A DataFrame is a rectangular collection of variables (in the columns) and observations (in the rows). `mpg` contains observations collected by the US Environmental Protection Agency on 38 models of car. 
+You can test your answer with the `mpg` DataFrame found in `plotnine.data`. A DataFrame is a rectangular collection of variables (in the columns) and observations (in the rows). `mpg` contains observations collected by the US Environmental Protection Agency on 38 models of car. 
 
 ```{python}
 mpg
@@ -97,7 +101,7 @@ To learn more about `mpg`, open its help page by running `?mpg`.
 
 To plot `mpg`, run this code to put `displ` on the x-axis and `hwy` on the y-axis:
 
-```{python dev='svg'}
+```{python}
 ggplot(data=mpg) +\
 geom_point(mapping=aes(x="displ", y="hwy"))
 ```
@@ -106,7 +110,7 @@ The plot shows a negative relationship between engine size (`displ`) and fuel ef
 
 With plotnine, you begin a plot with the function `ggplot()`. `ggplot()` creates a coordinate system that you can add layers to. The first argument of `ggplot()` is the dataset to use in the graph. So `ggplot(data=mpg)` creates an empty graph, but it's not very interesting so I'm not going to show it here.
 
-You complete your graph by adding one or more layers to `ggplot()`. The function `geom_point()` adds a layer of points to your plot, which creates a scatterplot. plotnine comes with many geom functions that each add a different type of layer to a plot. You'll learn a whole bunch of them throughout this chapter.
+You complete your graph by adding one or more layers to `ggplot()`. The function `geom_point()` adds a layer of points to your plot, which creates a scatterplot. plotnine comes with many geom functions that each add a different type of layer to a plot. You'll learn a whole bunch of them throughout this post.
 
 Each geom function in plotnine takes a `mapping` argument. This defines how variables in your dataset are mapped to visual properties. The `mapping` argument is always paired with `aes()`, and the `x` and `y` arguments of `aes()` specify which variables to map to the x and y axes. plotnine looks for the mapped variables in the `data` argument, in this case, `mpg`.
 
@@ -119,7 +123,7 @@ Let's turn this code into a reusable template for making graphs with plotnine. T
 # <GEOM_FUNCTION>(mapping=aes(<MAPPINGS>))
 ```
 
-The rest of this chapter will show you how to complete and extend this template to make different types of graphs. We will begin with the `<MAPPINGS>` component.
+The rest of this post will show you how to complete and extend this template to make different types of graphs. We will begin with the `<MAPPINGS>` component.
 
 ### [3.2.4](https://r4ds.had.co.nz/data-visualisation.html#exercises)&nbsp;&nbsp;&nbsp;Exercises
 
