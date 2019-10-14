@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euxo pipefail
 
 mkdir -p output
 Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("input/plotnine.Rmd", "output/plotnine.tmp.md")'

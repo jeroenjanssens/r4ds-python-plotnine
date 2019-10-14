@@ -22,16 +22,11 @@ output:
 <!-- TODO: Mention that we're using the preview version of RStudio -->
 <!-- TODO: mention style: p9 vs * and +\ and (+) -->
 
-
-
-```{r echo=FALSE}
+```{r setup, echo=FALSE}
+Sys.unsetenv("RETICULATE_PYTHON_ENV")
 library(reticulate)
 use_virtualenv("../venv", required = TRUE)
 knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
-```
-
-```{r}
-sessioninfo::session_info()
 ```
 
 
@@ -49,7 +44,7 @@ If you'd like to learn more about the theoretical underpinnings of plotnine befo
 
 This post focusses on plotnine. To access the datasets, help pages, and functions that we will use in this post, import the package by running this code:
 
-```{python}
+```{python import}
 from plotnine import *
 from plotnine.data import *
 
@@ -69,7 +64,7 @@ theme_set(theme_gray(base_size=13))
 
 This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed. If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
-```{text eval=FALSE}
+```{text, eval=FALSE}
 ! pip install plotnine[all]
 ```
 
