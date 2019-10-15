@@ -64,7 +64,7 @@ theme_set(theme_gray(base_size=13))
 
 This code imports the necessary packages and changes a few settings that are related to how DataFrames and figures are displayed. If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
-```{text, eval=FALSE}
+```{python, eval=FALSE}
 ! pip install plotnine[all]
 ```
 
@@ -152,18 +152,28 @@ Let's hypothesize that the cars are hybrids. One way to test this hypothesis is 
 
 You can add a third variable, like `class`, to a two dimensional scatterplot by mapping it to an __aesthetic__. An aesthetic is a visual property of the objects in your plot. Aesthetics include things like the size, the shape, or the color of your points. You can display a point (like the one below) in different ways by changing the values of its aesthetic properties. Since we already use the word "value" to describe data, let's use the word "level" to describe aesthetic properties. Here we change the levels of a point's size, shape, and color to make the point small, triangular, or blue:
 
-<!-- TODO: Include png directly from r4ds and add (foot)note -->
+<!-- TODO Add note about the no_labels function? -->
 
-<!-- ```{python, echo=FALSE, asp=1/4} -->
-<!-- ggplot() +\ -->
-<!-- geom_point(aes(1, 1), size=20) +\ -->
-<!-- geom_point(aes(2, 1), size=10) +\ -->
-<!-- geom_point(aes(3, 1), size=20, shape=17) +\ -->
-<!-- geom_point(aes(4, 1), size=20, colour="blue") +\ -->
-<!-- scale_x_continuous(limits=(0.5, 4.5), labels=None) +\ -->
-<!-- scale_y_continuous(limits=(0.9, 1.1), labels=None) +\ -->
-<!-- theme(aspect_ratio=1/3) -->
-<!-- ``` -->
+```{python, echo=FALSE}
+def no_labels(x) :
+    return [""] * len(x)
+  
+df = pd.DataFrame({"x": [1, 2, 3, 4],
+                   "y": [1, 1, 1, 1],
+                   "size": [20, 10, 20, 20],
+                   "shape": ["o", "o", "^", "o"],
+                   "color": ["black", "black", "black", "blue"]})
+ggplot(df, aes("x", "y", size="size", shape="shape", color="color")) +\
+geom_point() +\
+scale_x_continuous(limits=(0.5, 4.5), labels=no_labels) +\
+scale_y_continuous(limits=(0.9, 1.1), labels=no_labels) +\
+scale_size_identity() +\
+scale_shape_identity() +\
+scale_color_identity() +\
+labs(x=None, y=None) +\
+theme(aspect_ratio=1/3)
+```
+
 
 You can convey information about your data by mapping the aesthetics in your plot to the variables in your dataset. For example, you can map the colors of your points to the `class` variable to reveal the class of each car.
 
@@ -186,4 +196,9 @@ geom_point(mapping=aes(x="displ", y="hwy", size="class"))
 ```
 
 Or we could have mapped `class` to the _alpha_ aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.
+
+
+
+
+
 
