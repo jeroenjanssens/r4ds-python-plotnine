@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euxo pipefail
 
 NAME="plotnine-grammar-of-graphics-for-python"
 SITE=~/repos/mine/dsw-com
@@ -10,11 +11,11 @@ if [ ! -d "$SITE/" ]; then
     exit 1
 fi
 
-rm -v $SITE/content/_posts/*-$NAME.md
+rm $SITE/content/_posts/*-$NAME.md
 cat output/plotnine.md |
     sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/r4ds-python-plotnine|.|g' |
     sed -re "s;(figure/)|(images/);/assets/img/blog/${NAME}/;" > $FILE
 echo "Wrote $FILE"
 mkdir -p $SITE/assets/img/blog/$NAME/
-cp -v output/figure/* $SITE/assets/img/blog/$NAME/
-cp -v input/images/* $SITE/assets/img/blog/$NAME/
+cp output/figure/* $SITE/assets/img/blog/$NAME/
+cp input/images/* $SITE/assets/img/blog/$NAME/
