@@ -19,10 +19,7 @@ output:
     fig_retina: 2
 ---
 
-<!-- TODO: Mention that we're using the preview version of RStudio -->
-<!-- TODO: mention style: p9 vs * and +\ and (+) -->
-<!-- TODO: Mention: github repo, image of book, permissions, disclaimer (refer to source) -->
-<!-- TODO: Acknowledge: plotnine, reticulate, make, sed, python, r,  -->
+
 
 ```{r setup, echo=FALSE}
 Sys.unsetenv("RETICULATE_PYTHON_ENV")
@@ -44,7 +41,7 @@ This post will teach you how to visualise your data using plotnine. Python has m
 If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).  
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
-This post focusses on plotnine. To access the datasets, help pages, and functions that we will use in this post, import the necessary packages by running this code:
+This post focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this post, import the necessary packages by running this code:
 
 ```{python import}
 from plotnine import *
@@ -68,6 +65,7 @@ rcParams.update({"figure.max_open_warning": 0,
 theme_set(theme_gray(base_size=13))
 ```
 
+START_COMMENT
 
 If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
@@ -1163,7 +1161,123 @@ knitr::include_graphics("images/visualization-grammar-3.png")
 You could use this method to build _any_ plot that you imagine. In other words, you can use the code template that you've learned in this chapter to build hundreds of thousands of unique plots.
 
 
+END_COMMENT
 
 
+# [28](https://r4ds.had.co.nz/graphics-for-communication.html)&nbsp;&nbsp;&nbsp;Graphics for communication
+
+## [28.1](https://r4ds.had.co.nz/graphics-for-communication.html#introduction-19)&nbsp;&nbsp;&nbsp;Introduction
+
+Now that you understand your data, you need to _communicate_ your understanding to others. Your audience will likely not share your background knowledge and will not be deeply invested in the data. To help others quickly build up a good mental model of the data, you will need to invest considerable effort in making your plots as self-explanatory as possible. In this chapter, you'll learn some of the tools that plotnine provides to do so.
+
+The rest of this post focuses on the tools you need to create good graphics. I assume that you know what you want, and just need to know how to do it. For that reason, I highly recommend pairing this chapter with a good general visualisation book. I particularly like [_The Truthful Art_](https://amzn.com/0321934075), by Albert Cairo. It doesn't teach the mechanics of creating visualisations, but instead focuses on what you need to think about in order to create effective graphics.
+
+## [28.2](https://r4ds.had.co.nz/graphics-for-communication.html#label)&nbsp;&nbsp;&nbsp;Label
+
+The easiest place to start when turning an exploratory graphic into an expository graphic is with good labels. You add labels with the `labs()` function. This example adds a plot title:
+
+```{python, message=FALSE}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth(se=False) +\
+labs(title="Fuel efficiency generally decreases with engine size")
+```
+
+The purpose of a plot title is to summarise the main finding. Avoid titles that just describe what the plot is, e.g. "A scatterplot of engine displacement vs. fuel economy".
+
+You can also use `labs()` to replace the axis and legend titles. It's usually a good idea to replace short variable names with more detailed descriptions, and to include the units.
+
+```{python, message=FALSE}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+geom_smooth(se=False) +\
+labs(x="Engine displacement (L)",
+     y="Highway fuel economy (mpg)",
+     colour="Car type")
+```
 
 
+<!-- TODO: explain how to use latex in plotnine and matplotlib -->
+
+It's possible to use mathematical equations instead of text strings. You have to tell matplotlib, which is used by plotnine to do the actuall plotting, to use LaTeX for rendering text:
+
+```{python}
+from matplotlib import rc
+rc('text', usetex=True)
+
+df = pd.DataFrame({"x": np.random.uniform(size=10),
+                   "y": np.random.uniform(size=10)})
+
+ggplot(df, aes("x", "y")) +\
+geom_point() +\
+labs(x="$$\\sum_{i = 1}^n{x_i^2}$$",
+     y="$$\\alpha + \\beta + \\frac{\\delta}{\\theta}$$")
+```
+
+See [the matplotlib documentation](https://matplotlib.org/3.1.1/tutorials/text/mathtext.html) for more information about how to write mathematical equations using LaTeX.
+
+### [28.2.1](https://r4ds.had.co.nz/graphics-for-communication.html#exercises-71)&nbsp;&nbsp;&nbsp;Exercises
+
+1.  Create one plot on the fuel economy data with customised `title`, `x`, `y`, and `colour` labels.
+
+1.  The `geom_smooth()` is somewhat misleading because the `hwy` for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines. Use your modelling tools to fit and display a better model.
+
+1.  Take an exploratory graphic that you've created in the last month, and add an informative title to make it easier for others to understand.
+
+
+## [28.3](https://r4ds.had.co.nz/graphics-for-communication.html#annotations)&nbsp;&nbsp;&nbsp;Annotations
+
+In addition to labelling major components of your plot, it's often useful to label individual observations or groups of observations. The first tool you have at your disposal is `geom_text()`. `geom_text()` is similar to `geom_point()`, but it has an additional aesthetic: `label`. This makes it possible to add textual labels to your plots.
+
+There are two possible sources of labels. First, you might have a DataFrame that provides labels. The plot below isn't terribly useful, but it illustrates a useful approach: pull out the most efficient car in each class with pandas, and then label it on the plot:
+
+```{python}
+best_in_class = mpg\
+.sort_values(by="hwy", ascending=False)\
+.groupby("class")\
+.first()
+
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+geom_text(aes(label="model"), data=best_in_class)
+```
+
+
+This is hard to read because the labels overlap with each other, and with the points. We can make things a little better by switching to `geom_label()` which draws a rectangle behind the text. We also use the `nudge_y` parameter to move the labels slightly above the corresponding points:
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+geom_label(aes(label="model"), data=best_in_class, nudge_y=2, alpha=0.5)
+```
+
+That helps a bit, but if you look closely in the top-left hand corner, you'll notice that there are two labels practically on top of each other. This happens because the highway mileage and displacement for the best cars in the compact and subcompact categories are exactly the same. There's no way that we can fix these by applying the same transformation for every label. Instead, we can use the adjust_text argument. This useful argument, which employs the adjustText package under the hood, will automatically adjust labels so that they don't overlap:
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+geom_point(data=best_in_class, fill='none') +\
+geom_label(aes(label="model"), data=best_in_class, adjust_text={
+    'expand_points': (1.5, 1.5),
+    'arrowprops': {
+        'arrowstyle': '-'
+    }})
+```
+
+Note another handy technique used here: I added a second layer of large, hollow points to highlight the points that I've labelled.
+
+You can sometimes use the same idea to replace the legend with labels placed directly on the plot. It's not wonderful for this plot, but it isn't too bad. (`theme(legend_position="none"`) turns the legend off --- we'll talk about it more shortly.)
+
+<!-- TODO: Add note or footnote about the double geom_point and it's currently and issue: https://github.com/has2k1/plotnine/issues/324  -->
+
+```{python}
+class_avg = mpg\
+.groupby("class")["displ","hwy"].median()\
+.reset_index()
+
+ggplot(mpg, aes("displ", "hwy", colour="class")) +\
+geom_point() +\
+geom_label(aes(label="class"), data=class_avg, size=16, label_size=0, adjust_text={'expand_points': (0, 0)}) +\
+geom_point() +\
+theme(legend_position="none")
+```
