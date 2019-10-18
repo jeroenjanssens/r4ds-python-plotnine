@@ -9,4 +9,4 @@ sed -e '/START_COMMENT/,/END_COMMENT/d' |
 cat -s |
 sed -re 's/\[\^([0-9+])\]: (.*)$/<span id="fn:\1">\1\. \2<\/span>\n/' |
 sed -re 's/\[\^([0-9+])\]/[<sup>\1<\/sup>](#fn:\1)/g' |
-jupytext --from rmarkdown --to notebook --execute > notebook/r4ds-python-plotnine.ipynb
+jupytext --from rmarkdown --to notebook --set-kernel - --execute > notebook/r4ds-python-plotnine.ipynb
