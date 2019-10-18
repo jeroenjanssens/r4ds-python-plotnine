@@ -15,6 +15,7 @@ venv: requirements.txt
 	virtualenv --python=python3.7 venv
 	. venv/bin/activate; pip install -U pip
 	. venv/bin/activate; pip install -Ur requirements.txt
+	. venv/bin/activate; python -m ipykernel install --user --name=r4ds-python-plotnine
 
 renv: renv.lock
 	Rscript --no-restore --no-save -e 'if (!requireNamespace("remotes")) install.packages("remotes"); remotes::install_github("rstudio/renv"); renv::restore()' 
@@ -25,6 +26,9 @@ output/plotnine.md: install-r $(RMD)
 
 notebook/r4ds-python-plotnine.ipynb: install-python $(RMD)
 	. venv/bin/activate; bin/notebook.sh
+
+lab:
+	. venv/bin/activate; jupyter lab
 
 knit: $(MD)
 
