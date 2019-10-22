@@ -1281,3 +1281,223 @@ geom_label(aes(label="class"), data=class_avg, size=16, label_size=0, adjust_tex
 geom_point() +\
 theme(legend_position="none")
 ```
+
+
+Alternatively, you might just want to add a single label to the plot, but you'll still need to create a DataFrame. Often, you want the label in the corner of the plot, so it's convenient to create a new DataFrame using `pd.DataFrame()` and `max()` to compute the maximum values of x and y.
+
+```{python} 
+label = pd.DataFrame({"displ": [mpg.displ.max()],
+                      "hwy": [mpg.hwy.max()],
+                      "label": "Increasing engine size is \nrelated to decreasing fuel economy."})
+
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point() +\
+geom_text(aes(label="label"), data=label, va="top", ha="right")
+``` 
+
+If you want to place the text exactly on the borders of the plot, you can use `+np.Inf` and `-np.Inf`:
+
+```{python} 
+label = pd.DataFrame({"displ": [np.Inf],
+                      "hwy": [np.Inf],
+                      "label": "Increasing engine size is \nrelated to decreasing fuel economy."})
+
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point() +\
+geom_text(aes(label="label"), data=label, va="top", ha="right")
+``` 
+
+In these examples, I manually broke the label up into lines using `"\n"`. Another approach is to use the `fill` function from the `textwrap` module to automatically add line breaks, given the number of characters you want per line:
+
+```{python}
+from textwrap import fill
+
+print(fill("Increasing engine size is related to decreasing fuel economy.", width=40))
+```
+
+Note the use of `ha` and `va` to control the alignment of the label. The figure below shows all nine possible combinations.
+
+```{python, echo=FALSE}
+from itertools import product
+
+has = ["left", "center", "right"]
+vas = ["top", "center", "bottom"]
+xs = [0, 0.5, 1]
+ys = [1, 0.5, 0]
+
+df = pd.DataFrame([{"x": xs[x],
+                    "y": ys[y],
+                    "ha": has[x],
+                    "va": vas[y],
+                    "label": f"ha=\"{has[x]}\"\nva=\"{vas[y]}\""}
+                   for x, y in product(range(3), repeat=2)])
+
+ggplot(df, aes("x", "y")) +\
+geom_point(colour="grey", size=5) +\
+geom_point(size=0.5, colour="red") +\
+geom_text(aes(label="label", ha="ha", va="va")) +\
+labs(x=None, y=None)
+```
+
+Remember, in addition to `geom_text()`, you have many other geoms in plotnine available to help annotate your plot. A few ideas:
+
+*   Use `geom_hline()` and `geom_vline()` to add reference lines. I often make
+    them thick (`size=2`) and white (`colour="white"`), and draw them
+    underneath the primary data layer. That makes them easy to see, without
+    drawing attention away from the data.
+
+*   Use `geom_rect()` to draw a rectangle around points of interest. The
+    boundaries of the rectangle are defined by aesthetics `xmin`, `xmax`,
+    `ymin`, `ymax`.
+
+*   Use `geom_segment()` with the `arrow` argument to draw attention
+    to a point with an arrow. Use aesthetics `x` and `y` to define the
+    starting location, and `xend` and `yend` to define the end location.
+
+The only limit is your imagination (and your patience with positioning annotations to be aesthetically pleasing)!
+
+
+### [28.3.1](https://r4ds.had.co.nz/graphics-for-communication.html#exercises-72)&nbsp;&nbsp;&nbsp;Exercises
+
+1.  Use `geom_text()` with infinite positions to place text at the
+    four corners of the plot.
+
+1.  Read the documentation for `annotate()`. How can you use it to add a text
+    label to a plot without having to create a tibble?
+
+1.  How do labels with `geom_text()` interact with faceting? How can you
+    add a label to a single facet? How can you put a different label in
+    each facet? (Hint: think about the underlying data.)
+
+1.  What arguments to `geom_label()` control the appearance of the background
+    box?
+
+1.  What are the four arguments to `arrow()`? How do they work? Create a series
+    of plots that demonstrate the most important options.
+
+
+
+
+
+
+## [28.4](https://r4ds.had.co.nz/graphics-for-communication.html#scales)&nbsp;&nbsp;&nbsp;Scales
+
+The third way you can make your plot better for communication is to adjust the scales. Scales control the mapping from data values to things that you can perceive. Normally, plotnine automatically adds scales for you. For example, when you type:
+
+```python
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class"))
+```
+
+plotnine automatically adds default scales behind the scenes:
+
+```python
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+scale_x_continuous() +\
+scale_y_continuous() +\
+scale_colour_discrete()
+```
+
+Note the naming scheme for scales: `scale_` followed by the name of the aesthetic, then `_`, then the name of the scale. The default scales are named according to the type of variable they align with: continuous, discrete, datetime, or date. There are lots of non-default scales which you'll learn about below.
+
+The default scales have been carefully chosen to do a good job for a wide range of inputs. Nevertheless, you might want to override the defaults for two reasons:
+
+*   You might want to tweak some of the parameters of the default scale.
+    This allows you to do things like change the breaks on the axes, or the
+    key labels on the legend.
+
+*   You might want to replace the scale altogether, and use a completely
+    different algorithm. Often you can do better than the default because
+    you know more about the data.
+
+
+### [28.4.1](https://r4ds.had.co.nz/graphics-for-communication.html#axis-ticks-and-legend-keys)&nbsp;&nbsp;&nbsp;Axis ticks and legend keys
+
+There are two primary arguments that affect the appearance of the ticks on the axes and the keys on the legend: `breaks` and `labels`. Breaks controls the position of the ticks, or the values associated with the keys. Labels controls the text label associated with each tick/key. The most common use of `breaks` is to override the default choice:
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point() +\
+scale_y_continuous(breaks=range(15, 45, 5))
+```
+
+You can use `labels` in the same way (a list of strings the same length as `breaks`), but you can also suppress the labels altogether by passing a list of empty strings. This is useful for maps, or for publishing plots where you can't share the absolute numbers. Note that the list of labels needs to be of the same length as the list of values, so a helper function like `no_labels` is helpful:
+
+```{python}
+def no_labels(values):
+    return [""] * len(values)
+
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point() +\
+scale_x_continuous(labels=no_labels) +\
+scale_y_continuous(labels=no_labels)
+```
+
+You can also use `breaks` and `labels` to control the appearance of legends. Collectively axes and legends are called __guides__. Axes are used for x and y aesthetics; legends are used for everything else.
+
+Another use of `breaks` is when you have relatively few data points and want to highlight exactly where the observations occur. For example, take this plot that shows when each US president started and ended their term.
+
+
+```{python}
+presidential["id"] = 34 + presidential.index
+
+ggplot(presidential, aes("start", "id")) +\
+geom_point() +\
+geom_segment(aes(xend="end", yend="id")) +\
+scale_x_date(name="", breaks=presidential.start, date_labels="'%y")
+```
+
+Note that the specification of breaks and labels for date and datetime scales is a little different:
+
+* `date_labels` takes a format specification, in the same form as `time.strptime()`.
+
+* `date_breaks` (not shown here), takes a string like "2 days" or "1 month".
+
+
+### [28.4.2](https://r4ds.had.co.nz/graphics-for-communication.html#legend-layout)&nbsp;&nbsp;&nbsp;Legend layout
+
+You will most often use `breaks` and `labels` to tweak the axes. While they both also work for legends, there are a few other techniques you are more likely to use.
+
+To control the overall position of the legend, you need to use a `theme()` setting. We'll come back to themes at the end of the chapter, but in brief, they control the non-data parts of the plot. The theme setting `legend_position` controls where the legend is drawn:
+
+
+```{python, eval=FALSE}
+base = ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class"))
+
+base + theme(legend_position="left")
+base + theme(legend_position="top")
+base + theme(legend_position="bottom")
+base + theme(legend_position="right") # the default
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
