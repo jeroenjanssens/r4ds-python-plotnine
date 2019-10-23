@@ -24,6 +24,7 @@ output:
 ### A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.
 <!-- END_HIDE_MD -->
 
+
 ```{r setup, echo=FALSE}
 Sys.unsetenv("RETICULATE_PYTHON_ENV")
 library(reticulate)
@@ -41,7 +42,8 @@ knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-
 
 This post will teach you how to visualise your data using plotnine. Python has many packages for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
 
-If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).  
+If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).
+
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
 This post focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this post, import the necessary packages by running this code:
@@ -1671,7 +1673,7 @@ For continuous colour, you can use the built-in `scale_colour_gradient()` or `sc
 Note that all colour scales come in two variety: `scale_colour_x()` and `scale_fill_x()` for the `colour` and `fill` aesthetics respectively (the colour scales are available in both UK and US spellings).
 
 
-### Exercises
+### [28.4.4](https://r4ds.had.co.nz/graphics-for-communication.html#exercises-73)&nbsp;&nbsp;&nbsp;Exercises
 
 1.  Why doesn't the following code override the default scale?
     ```python
@@ -1711,7 +1713,7 @@ To zoom in on a region of the plot, it's generally best to use `coord_cartesian(
 
 
 ```{python}
-ggplot(mpg, mapping=aes("displ", "hwy")) +\
+ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(color="class")) +\
 geom_smooth() +\
 coord_cartesian(xlim=(5, 7), ylim=(10, 30))
@@ -1726,7 +1728,7 @@ geom_smooth()
 
 <!-- START_HIDE_IPYNB -->
 ```{python, eval=FALSE}
-ggplot(mpg, mapping=aes("displ", "hwy")) +\
+ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(color="class")) +\
 geom_smooth() +\
 coord_cartesian(xlim=(5, 7), ylim=(10, 30))
