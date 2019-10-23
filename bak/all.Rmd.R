@@ -1,45 +1,4 @@
 
-
-
-
-
-
-<!-- ```{python} -->
-<!-- class_avg = mpg %>% -->
-<!-- group_by("class") %>% -->
-<!-- summarise( -->
-<!--   displ=median("displ"), -->
-<!--   hwy=median("hwy") -->
-<!-- ) -->
-
-<!-- ggplot(mpg, aes("displ", "hwy", colour="class")) +\ -->
-<!-- ggrepel::geom_label_repel(aes(label="class"), -->
-<!--   data=class_avg, -->
-<!--   size=6, -->
-<!--   label_size=0, -->
-<!--   segment_color=NA -->
-<!-- ) +\ -->
-<!-- geom_point() +\ -->
-<!-- theme(legend_position="none") -->
-<!-- ``` -->
-
-Alternatively, you might just want to add a single label to the plot, but you'll still need to create a DataFrame. Often, you want the label in the corner of the plot, so it's convenient to create a new DataFrame using `summarise()` to compute the maximum values of x and y.
-
-<!-- ```{python} -->
-<!-- label = mpg %>% -->
-<!-- summarise( -->
-<!--   displ=max("displ"), -->
-<!--   hwy=max("hwy"), -->
-<!--   label="Increasing engine size is \nrelated to decreasing fuel economy." -->
-<!-- ) -->
-
-<!-- ggplot(mpg, aes("displ", "hwy")) +\ -->
-<!-- geom_point() +\ -->
-<!-- geom_text(aes(label=label), data=label, vjust="top", hjust="right") -->
-<!-- ``` -->
-
-If you want to place the text exactly on the borders of the plot, you can use `+Inf` and `-Inf`. Since we're no longer computing the positions from `mpg`, we can use `tibble()` to create the DataFrame:
-
   <!-- ```{python} -->
   <!-- label = tibble( -->
                          <!-- displ=Inf, -->
