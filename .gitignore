@@ -6,8 +6,8 @@
 renv/library
 
 venv/
-output/
 input/figure
 input/plotnine.html
+output/figure
 
 .ipynb_checkpoints
