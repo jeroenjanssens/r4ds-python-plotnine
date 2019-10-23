@@ -19,7 +19,10 @@ output:
     fig_retina: 2
 ---
 
-
+<!-- START_HIDE_MD -->
+# Plotnine: Grammar of Graphics for Python
+### A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.
+<!-- END_HIDE_MD -->
 
 ```{r setup, echo=FALSE}
 Sys.unsetenv("RETICULATE_PYTHON_ENV")
@@ -1161,7 +1164,6 @@ knitr::include_graphics("images/visualization-grammar-3.png")
 You could use this method to build _any_ plot that you imagine. In other words, you can use the code template that you've learned in this chapter to build hundreds of thousands of unique plots.
 
 
-END_COMMENT
 
 
 # [28](https://r4ds.had.co.nz/graphics-for-communication.html)&nbsp;&nbsp;&nbsp;Graphics for communication
@@ -1459,45 +1461,296 @@ Note that the specification of breaks and labels for date and datetime scales is
 
 You will most often use `breaks` and `labels` to tweak the axes. While they both also work for legends, there are a few other techniques you are more likely to use.
 
-To control the overall position of the legend, you need to use a `theme()` setting. We'll come back to themes at the end of the chapter, but in brief, they control the non-data parts of the plot. The theme setting `legend_position` controls where the legend is drawn:
+To control the overall position of the legend, you need to use a `theme()` setting. We'll come back to themes at the end of the chapter, but in brief, they control the non-data parts of the plot. The theme setting `legend_position` controls where the legend is drawn. Unfortunately, in order to position the legend correctly on the left or the bottom, we have to be a bit more explicit. Just using "left" and "bottom" may cause the legend to overlap the axis labels. Your milage may vary.
 
-
+<!-- START_HIDE_IPYNB -->
 ```{python, eval=FALSE}
 base = ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(colour="class"))
 
-base + theme(legend_position="left")
-base + theme(legend_position="top")
-base + theme(legend_position="bottom")
 base + theme(legend_position="right") # the default
+base + theme(subplots_adjust={'left': 0.3}) + theme(legend_position=(0, 0.5))
+base + theme(legend_position="top")
+base + theme(subplots_adjust={'bottom': 0.3}, legend_position=(.5, 0), legend_direction='horizontal')
+```
+
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+base = ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class"))
+
+base + theme_gray(base_size=24) + theme(legend_position="right")
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+base + theme_gray(base_size=19) + theme(subplots_adjust={'left': 0.3}) + theme(legend_position=(0, 0.5))
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+base + theme_gray(base_size=18) + theme(legend_position="top")
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+base + theme_gray(base_size=18) + theme(subplots_adjust={'bottom': 0.3}, legend_position=(.5, 0), legend_direction='horizontal')
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+base = ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class"))
+```
+
+```{python}
+base + theme(legend_position="right") # the default
+```
+
+```{python}
+base + theme(subplots_adjust={'left': 0.2}) + theme(legend_position=(0, 0.5))
+```
+
+```{python}
+base + theme(legend_position="top")
+```
+
+```{python}
+base + theme(subplots_adjust={'bottom': 0.2}, legend_position=(.5, 0), legend_direction='horizontal')
+```
+
+<!-- END_HIDE_MD -->
+
+
+You can also use `legend_position="none"` to suppress the display of the legend altogether.
+
+To control the display of individual legends, use `guides()` along with `guide_legend()` or `guide_colourbar()`. The following example shows two important settings: controlling the number of rows the legend uses with `nrow`, and overriding one of the aesthetics to make the points bigger. This is particularly useful if you have used a low `alpha` to display many points on a plot.
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(colour="class")) +\
+geom_smooth(se=False) +\
+theme(legend_position="bottom") +\
+guides(colour=guide_legend(nrow=1, override_aes={"size": 4}))
+```
+
+
+### [28.4.3](https://r4ds.had.co.nz/graphics-for-communication.html#replacing-a-scale)&nbsp;&nbsp;&nbsp;Replacing a scale
+
+Instead of just tweaking the details a little, you can instead replace the scale altogether. There are two types of scales you're mostly likely to want to switch out: continuous position scales and colour scales. Fortunately, the same principles apply to all the other aesthetics, so once you've mastered position and colour, you'll be able to quickly pick up other scale replacements.
+
+It's very useful to plot transformations of your variable. For example, with the `diamonds` DataFrame, it's easier to see the precise relationship between `carat` and `price` if we log transform them:
+
+
+<!-- START_HIDE_IPYNB -->
+```{python, eval=FALSE}
+ggplot(diamonds, aes("carat", "price")) +\
+geom_bin2d()
+
+ggplot(diamonds, aes("np.log10(carat)", "np.log10(price)")) +\
+geom_bin2d()
+```
+
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(diamonds, aes("carat", "price")) +\
+geom_bin2d() +\
+theme_gray(base_size=18) 
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(diamonds, aes("np.log10(carat)", "np.log10(price)")) +\
+geom_bin2d() +\
+theme_gray(base_size=18)
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+ggplot(diamonds, aes("carat", "price")) +\
+geom_bin2d()
+```
+
+```{python}
+ggplot(diamonds, aes("np.log10(carat)", "np.log10(price)")) +\
+geom_bin2d()
+```
+<!-- END_HIDE_MD -->
+
+However, the disadvantage of this transformation is that the axes are now labelled with the transformed values, making it hard to interpret the plot. Instead of doing the transformation in the aesthetic mapping, we can instead do it with the scale. This is visually identical, except the axes are labelled on the original data scale.
+
+```{python}
+ggplot(diamonds, aes("carat", "price")) +\
+geom_bin2d() +\
+scale_x_log10() +\
+scale_y_log10()
+```
+
+Another scale that is frequently customised is colour. The default categorical scale picks colours that are evenly spaced around the colour wheel. Useful alternatives are the ColorBrewer scales which have been hand tuned to work better for people with common types of colour blindness. The two plots below look similar, but there is enough difference in the shades of red and green that the dots on the right can be distinguished even by people with red-green colour blindness.
+
+END_COMMENT
+
+
+
+<!-- START_HIDE_IPYNB -->
+```{python, eval=FALSE}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv"))
+
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv")) +\
+scale_colour_brewer(type="qual", palette="Set1")
+```
+
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv")) +\
+theme_gray(base_size=18)
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv")) +\
+scale_colour_brewer(type="qual", palette="Set1") +\
+theme_gray(base_size=18)
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv"))
+```
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv")) +\
+scale_colour_brewer(type="qual", palette="Set1")
+```
+<!-- END_HIDE_MD -->
+
+Don't forget simpler techniques. If there are just a few colours, you can add a redundant shape mapping. This will also help ensure your plot is interpretable in black and white.
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="drv", shape="drv")) +\
+scale_colour_brewer(type="qual", palette="Set1")
+```
+
+The ColorBrewer scales are documented online at <http://colorbrewer2.org/> and made available in Python via the __mizani__ package, by Hassan Kibirige. The figure below shows the complete list of all palettes. The sequential (top) and diverging (bottom) palettes are particularly useful if your categorical values are ordered, or have a "middle". This often arises if you've used `pd.cut()` to make a continuous variable into a categorical variable.
+
+
+```{r, echo=FALSE, dev="png", out.extra="class=\"md:w-1/2\""}
+knitr::include_graphics("images/brewer-1.png")
+```
+
+When you have a predefined mapping between values and colours, use `scale_colour_manual()`. For example, if we map presidential party to colour, we want to use the standard mapping of red for Republicans and blue for Democrats:
+
+
+```{python}
+presidential["id"] = 34 + presidential.index
+
+ggplot(presidential, aes("start", "id", colour="party")) +\
+geom_point() +\
+geom_segment(aes(xend="end", yend="id")) +\
+scale_colour_manual(values=["red", "blue"], limits=["Republican", "Democratic"])
+```
+
+For continuous colour, you can use the built-in `scale_colour_gradient()` or `scale_fill_gradient()`. If you have a diverging scale, you can use `scale_colour_gradient2()`. That allows you to give, for example, positive and negative values different colours. That's sometimes also useful if you want to distinguish points above or below the mean.
+
+Note that all colour scales come in two variety: `scale_colour_x()` and `scale_fill_x()` for the `colour` and `fill` aesthetics respectively (the colour scales are available in both UK and US spellings).
+
+
+### Exercises
+
+1.  Why doesn't the following code override the default scale?
+    ```python
+    ggplot(df, aes("x", "y")) +\
+    geom_hex() +\
+    scale_colour_gradient(low="white", high="red") +\
+    coord_fixed()
+    ```
+
+1.  What is the first argument to every scale? How does it compare to `labs()`?
+
+1.  Change the display of the presidential terms by:
+
+    1. Combining the two variants shown above.
+    1. Improving the display of the y axis.
+    1. Labelling each term with the name of the president.
+    1. Adding informative plot labels.
+    1. Placing breaks every 4 years (this is trickier than it seems!).
+
+1.  Use `override_aes` to make the legend on the following plot easier to see.
+
+    ```{python}
+    ggplot(diamonds, aes("carat", "price")) +\
+    geom_point(aes(colour="cut"), alpha=1/20)
+    ```
+
+
+## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
+
+There are three ways to control the plot limits:
+
+1. Adjusting what data are plotted
+1. Setting the limits in each scale
+1. Setting `xlim` and `ylim` in `coord_cartesian()`
+
+To zoom in on a region of the plot, it's generally best to use `coord_cartesian()`. Compare the following two plots:
+
+
+```{python}
+ggplot(mpg, mapping=aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30))
+
+
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth()
 ```
 
 
 
+<!-- START_HIDE_IPYNB -->
+```{python, eval=FALSE}
+ggplot(mpg, mapping=aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30))
 
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth()
+```
 
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
 
+```
+</div>
+<div class="mx-auto md:w-1/2 px-8">
+```{python, echo=FALSE, out.extra = ""}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+```
+<!-- END_HIDE_MD -->
 
