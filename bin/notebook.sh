@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+mkdir -p output
+
 cat input/plotnine.Rmd |
 sed -e '/^---$/,/^---$/d;/```{r/,/```/d;/TODO/d' |
 sed -e '/<!-- START_HIDE_IPYNB -->/,/<!-- END_HIDE_IPYNB -->/d' |

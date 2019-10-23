@@ -9,5 +9,6 @@ venv/
 input/figure
 input/plotnine.html
 output/figure
+output/r4ds-python-plotnine.blogpost.md
 
 .ipynb_checkpoints

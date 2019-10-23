@@ -12,7 +12,7 @@ if [ ! -d "$SITE/" ]; then
 fi
 
 rm $SITE/content/_posts/*-$NAME.md
-cat output/plotnine.md |
+cat output/r4ds-python-plotnine.blogpost.md |
     sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/r4ds-python-plotnine|.|g' |
     sed -re "s;(figure/)|(images/);/assets/img/blog/${NAME}/;" > $FILE
 echo "Wrote $FILE"

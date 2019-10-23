@@ -17,6 +17,7 @@ cat output/plotnine.tmp.md |
     sed 's/ title="[^"]*"//g' |
     sed '/## *$/d' |
     sed '/## <ggplot:/d' |
-    sed '/^ *```$/{N; /^ *``` *\n *``` *$/d}' > output/r4ds-python-plotnine.md
+    sed '/^ *```$/{N; /^ *``` *\n *``` *$/d}' > output/r4ds-python-plotnine.blogpost.md
 
+sed -re '/<\/?div/d;s/ class="[^"]"//g' -i output/r4ds-python-plotnine.Rmd
 rm output/plotnine.tmp.md
