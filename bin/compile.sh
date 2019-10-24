@@ -9,8 +9,8 @@ cat input/plotnine.Rmd |
     sed -e '/START_COMMENT/,/END_COMMENT/d' > output/r4ds-python-plotnine.Rmd
 
 Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("output/r4ds-python-plotnine.Rmd", "output/plotnine.tmp.md")'
-rm -rf output/figure
-cp -R input/figure output
+#rm -rf output/figure
+#cp -R input/figure output
 
 cat output/plotnine.tmp.md |
     sed 's/ alt="[^"]*"//g' |

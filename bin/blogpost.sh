@@ -17,5 +17,6 @@ cat output/r4ds-python-plotnine.blogpost.md |
     sed -re "s;(figure/)|(images/);/assets/img/blog/${NAME}/;" > $FILE
 echo "Wrote $FILE"
 mkdir -p $SITE/assets/img/blog/$NAME/
+rm -rf $SITE/assets/img/blog/$NAME/*
 cp output/figure/* $SITE/assets/img/blog/$NAME/
 cp input/images/* $SITE/assets/img/blog/$NAME/
