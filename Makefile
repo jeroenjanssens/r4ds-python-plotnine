@@ -1,8 +1,8 @@
-.PHONY: install install-python install-r version knit notebook blogpost
+.PHONY: install install-python install-r
 
-RMD = input/plotnine.Rmd
-MD = output/plotnine.md
-IPYNB = notebook/r4ds-python-plotnine.ipynb
+INPUT = input/plotnine.Rmd
+MD = output/r4ds-python-plotnine.blogpost.md
+IPYNB = output/r4ds-python-plotnine.ipynb
 
 install: install-python install-r
 
@@ -21,10 +21,10 @@ renv: renv.lock
 	Rscript --no-restore --no-save -e 'if (!requireNamespace("remotes")) install.packages("remotes"); remotes::install_github("rstudio/renv"); renv::restore()' 
 	touch renv
 
-output/plotnine.md: install-r $(RMD)
+$(MD): install-r $(INPUT)
 	bin/compile.sh
 
-notebook/r4ds-python-plotnine.ipynb: install-python $(RMD)
+$(IPYNB): install-python $(INPUT)
 	. venv/bin/activate; bin/notebook.sh
 
 lab:
