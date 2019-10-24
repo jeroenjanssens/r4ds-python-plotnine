@@ -1711,21 +1711,6 @@ There are three ways to control the plot limits:
 
 To zoom in on a region of the plot, it's generally best to use `coord_cartesian()`. Compare the following two plots:
 
-
-```{python}
-ggplot(mpg, aes("displ", "hwy")) +\
-geom_point(aes(color="class")) +\
-geom_smooth() +\
-coord_cartesian(xlim=(5, 7), ylim=(10, 30))
-
-
-ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
-geom_point(aes(color="class")) +\
-geom_smooth()
-```
-
-
-
 <!-- START_HIDE_IPYNB -->
 ```{python, eval=FALSE}
 ggplot(mpg, aes("displ", "hwy")) +\
@@ -1741,18 +1726,35 @@ geom_smooth()
 <div class="flex flex-wrap md:flex-row mb-4">
 <div class="mx-auto md:w-1/2 px-8">
 ```{python, echo=FALSE, out.extra = ""}
-
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30)) +\
+theme_gray(base_size=18)
 ```
 </div>
 <div class="mx-auto md:w-1/2 px-8">
 ```{python, echo=FALSE, out.extra = ""}
-
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+theme_gray(base_size=18)
 ```
 </div>
 </div>
 <!-- END_HIDE_IPYNB -->
 <!-- START_HIDE_MD -->
 ```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30))
+```
+
+```{python}
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth()
 ```
 <!-- END_HIDE_MD -->
 
