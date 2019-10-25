@@ -1,0 +1,105 @@
+---
+layout: post
+title: "Plotnine: Grammar of Graphics for Python"
+tagline: 'A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.'
+author: jeroen-janssens
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+type: tutorial
+min-read: 30
+banner:
+  file: holly-stratton-XTHa-47HjjI-unsplash.jpg
+  author: Holly Stratton
+  url: https://unsplash.com/photos/XTHa-47HjjI
+output:
+  html_document:
+    fig_retina: 2
+  md_document:
+    variant: markdown_github
+    preserve_yaml: true
+    fig_retina: 2
+---
+
+
+
+```{r setup, echo=FALSE}
+Sys.unsetenv("RETICULATE_PYTHON_ENV")
+library(reticulate)
+use_virtualenv("../venv", required = TRUE)
+knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
+```
+
+
+# [3](https://r4ds.had.co.nz/data-visualisation.html)&nbsp;&nbsp;&nbsp;Data visualisation
+
+## [3.1](https://r4ds.had.co.nz/data-visualisation.html#introduction-1)&nbsp;&nbsp;&nbsp;Introduction
+
+> "The simple graph has brought more information to the data analyst’s mind 
+> than any other device." --- John Tukey
+
+This post will teach you how to visualise your data using plotnine. Python has many packages for making graphs, but plotnine is one of the most elegant and most versatile. plotnine implements the __grammar of graphics__, a coherent system for describing and building graphs. With plotnine, you can do more faster by learning one system and applying it in many places.
+
+If you'd like to learn more about the theoretical underpinnings of plotnine before you start, I'd recommend reading [The Layered Grammar of Graphics](http://vita.had.co.nz/papers/layered-grammar.pdf).
+
+### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
+
+This post focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this post, import the necessary packages by running this code:
+
+```{python import}
+from plotnine import *
+from plotnine.data import *
+
+import numpy as np
+import pandas as pd
+```
+
+```{python settings, echo=FALSE}
+import warnings
+from matplotlib import rcParams
+
+pd.set_option("display.max_rows", 10)
+rcParams.update({"figure.max_open_warning": 0,
+                 "savefig.bbox": "tight",
+                 "savefig.dpi": 300,
+                 "savefig.format": "svg",
+                 "text.usetex": True})
+                 
+theme_set(theme_gray(base_size=13))
+```
+
+
+## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
+
+There are three ways to control the plot limits:
+
+1. Adjusting what data are plotted
+1. Setting the limits in each scale
+1. Setting `xlim` and `ylim` in `coord_cartesian()`
+
+To zoom in on a region of the plot, it's generally best to use `coord_cartesian()`. Compare the following two plots:
+
+```{python, eval=FALSE}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30))
+
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth()
+```
+
+```{python, echo=FALSE, out.extra = ""}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+coord_cartesian(xlim=(5, 7), ylim=(10, 30)) +\
+theme_gray(base_size=18)
+```
+```{python, echo=FALSE, out.extra = ""}
+ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth() +\
+theme_gray(base_size=18)
+```
+
+
