@@ -1,14 +1,19 @@
+# R
+renv/library
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 
-renv/library
-
+# Python
 venv/
+.ipynb_checkpoints
+
+# Input files
 input/figure
 input/plotnine.html
-output/figure
-output/r4ds-python-plotnine.blogpost.md
 
-.ipynb_checkpoints
+# Output files
+output/figure
+output/r4ds-python-plotnine.blog.md
+output/r4ds-python-plotnine.div.Rmd

@@ -1596,7 +1596,6 @@ scale_y_log10()
 
 Another scale that is frequently customised is colour. The default categorical scale picks colours that are evenly spaced around the colour wheel. Useful alternatives are the ColorBrewer scales which have been hand tuned to work better for people with common types of colour blindness. The two plots below look similar, but there is enough difference in the shades of red and green that the dots on the right can be distinguished even by people with red-green colour blindness.
 
-END_COMMENT
 
 
 
@@ -1700,6 +1699,7 @@ Note that all colour scales come in two variety: `scale_colour_x()` and `scale_f
     geom_point(aes(colour="cut"), alpha=1/20)
     ```
 
+END_COMMENT
 
 ## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
 
@@ -1757,4 +1757,5 @@ geom_point(aes(color="class")) +\
 geom_smooth()
 ```
 <!-- END_HIDE_MD -->
+
 
