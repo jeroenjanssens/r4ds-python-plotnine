@@ -20,9 +20,9 @@ venv: requirements.txt
 	pip install -Ur requirements.txt
 	python -m ipykernel install --user --name=$(NAME)
 
-renv: renv.lock
+renv/library: renv.lock
 	Rscript --no-restore --no-save -e 'if (!requireNamespace("remotes")) install.packages("remotes"); remotes::install_github("rstudio/renv"); renv::restore()' 
-	touch renv
+	touch $@
 	
 output:
 	mkdir -p $@
@@ -49,9 +49,8 @@ output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output
 output/$(NAME).Rmd: output/$(NAME).div.Rmd
 	< $< sed -re '/<\/?div/d;s/ class="[^"]"//g' > $@ # remove div elements
 
-output/$(NAME).blog.md: output/$(NAME).div.Rmd renv
+output/$(NAME).blog.md: output/$(NAME).div.Rmd renv/library
 	Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("$<", "$@")'
-	#touch $@
 	
 rmd: output/$(NAME).Rmd
 ipynb: output/$(NAME).ipynb
