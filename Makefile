@@ -43,8 +43,8 @@ output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile Jupyter note
 
 output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant for R markdown
 	< $< sed -e '/<!-- START_HIDE_MD -->/,/<!-- END_HIDE_MD -->/d' | \
-    sed -e '/_HIDE_IPYNB/d' | \
-    sed -e '/START_COMMENT/,/END_COMMENT/d' > $@
+	sed -e '/_HIDE_IPYNB/d' | \
+	sed -e '/START_COMMENT/,/END_COMMENT/d' > $@
 
 output/$(NAME).Rmd: output/$(NAME).div.Rmd # remove div elements as they're only used by the blog post
 	< $< sed -re '/<\/?div/d;s/ class="[^"]"//g' > $@
@@ -64,9 +64,9 @@ $(POST): output/$(NAME).blog.md $(SITE)/content/_posts $(SITE)/assets/img/blog
 	cat $< | \
 	sed 's/ alt="[^"]*"//g' | \
 	sed 's/ title="[^"]*"//g' | \
-    sed '/## *$$/d' | \
+	sed '/## *$$/d' | \
 	sed '/## <ggplot:/d' | \
-    sed '/^ *```$$/{N; /^ *``` *\n *``` *$$/d}' | \
+	sed '/^ *```$$/{N; /^ *``` *\n *``` *$$/d}' | \
 	sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/r4ds-python-plotnine|.|g' | \
 	sed -re "s;(figure/)|(images/);/assets/img/blog/$(SLUG)/;" > $@
 
