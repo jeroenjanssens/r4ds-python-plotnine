@@ -49,7 +49,7 @@ output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant 
 output/$(NAME).Rmd: output/$(NAME).div.Rmd # remove div elements as they're only used by the blog post
 	< $< sed -re '/<\/?div/d;s/ class="[^"]"//g' > $@
 
-output/$(NAME).blog.md: output/$(NAME).div.Rmd renv/library
+output/$(NAME).blog.md: output/$(NAME).div.Rmd venv renv/library
 	Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("$<", "$@")'
 	
 rmd: output/$(NAME).Rmd
