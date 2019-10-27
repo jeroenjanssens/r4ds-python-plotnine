@@ -12,6 +12,9 @@ SLUG = plotnine-grammar-of-graphics-for-python
 SITE = ~/repos/mine/dsw-com
 POST = $(SITE)/content/_posts/$(shell date +'%Y-%m-%d')-$(SLUG).md
 
+output:
+	mkdir -p $@
+
 venv: requirements.txt
 	rm -rf venv
 	virtualenv --python=python3.7 venv
@@ -24,9 +27,6 @@ renv/library: renv.lock
 	Rscript --vanilla -e 'if (!requireNamespace("remotes")) install.packages("remotes"); remotes::install_github("rstudio/renv"); renv::restore()' 
 	touch $@
 	
-output:
-	mkdir -p $@
-
 clean:
 	rm -rf output
 
