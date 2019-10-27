@@ -29,7 +29,8 @@ output:
 Sys.unsetenv("RETICULATE_PYTHON_ENV")
 library(reticulate)
 use_virtualenv("../venv", required = TRUE)
-knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
+# knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
+knitr::opts_chunk$set(fig.show = "hold", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center", dpi=300)
 ```
 
 
@@ -58,19 +59,15 @@ import pandas as pd
 
 ```{python settings, echo=FALSE}
 import warnings
-from matplotlib import rcParams
-
 pd.set_option("display.max_rows", 10)
+
+from matplotlib import rcParams
 rcParams.update({"figure.max_open_warning": 0,
-                 "savefig.bbox": "tight",
-                 "savefig.dpi": 300,
-                 "savefig.format": "svg",
-                 "text.usetex": True})
-                 
-theme_set(theme_gray(base_size=13))
+                 "savefig.bbox": "tight"})
+
+theme_set(theme_gray(base_size=12))
 ```
 
-START_COMMENT
 
 If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
@@ -110,6 +107,7 @@ To plot `mpg`, run this code to put `displ` on the x-axis and `hwy` on the y-axi
 ggplot(data=mpg) +\
 geom_point(mapping=aes(x="displ", y="hwy"))
 ```
+
 
 The plot shows a negative relationship between engine size (`displ`) and fuel efficiency (`hwy`). In other words, cars with big engines use more fuel. Does this confirm or refute your hypothesis about fuel efficiency and engine size?
 
@@ -237,18 +235,16 @@ geom_point(mapping=aes(x="displ", y="hwy", shape="manufacturer"))
 ```
 
 <div class="flex flex-wrap md:flex-row md:flex-no-wrap mb-4">
-  <div class="md:w-1/2 px-8">
+  <div class="md:w-1/2 px-4">
 ```{python echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_point(mapping=aes(x="displ", y="hwy", alpha="manufacturer")) +\
-theme_gray(base_size=20)
+geom_point(mapping=aes(x="displ", y="hwy", alpha="manufacturer"))
 ```
   </div>
-  <div class="md:w-1/2 px-8">
+  <div class="md:w-1/2 px-4">
 ```{python echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_point(mapping=aes(x="displ", y="hwy", shape="manufacturer")) +\
-theme_gray(base_size=20)
+geom_point(mapping=aes(x="displ", y="hwy", shape="manufacturer"))
 ```
   </div>
 </div>
@@ -274,7 +270,7 @@ Here, the color doesn't convey information about a variable, but only changes th
 * The shape of a point as a character or number, as shown below.
 
 ```{python shapes, echo=FALSE}
-rcParams.update({"text.usetex": False})
+#rcParams.update({"text.usetex": False})
 shapes = [".",",","o","v","^","<",">","1","2","3","4","8","s","p","P","*","h","H","+","x","X","D","d","|","_"] + list(range(12))
 labels = ["'" + s + "'" for s in shapes[:25]] + [str(s) for s in range(12)]
 
@@ -292,7 +288,7 @@ theme(aspect_ratio=1/2.75)
 ```
 
 ```{python, echo=FALSE}
-rcParams.update({"text.usetex": True})
+#rcParams.update({"text.usetex": True})
 ```
 
 ### [3.3.1](https://r4ds.had.co.nz/data-visualisation.html#exercises-1)&nbsp;&nbsp;&nbsp;Exercises
@@ -461,18 +457,16 @@ geom_smooth(mapping=aes(x="displ", y="hwy"))
 
 <!-- START_HIDE_IPYNB -->
 <div class="flex flex-wrap md:flex-row md:flex-no-wrap mb-4">
-  <div class="md:w-1/2 px-8">
+  <div class="md:w-1/2 px-4">
 ```{python echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_point(mapping=aes(x="displ", y="hwy")) +\
-theme_gray(base_size=20)
+geom_point(mapping=aes(x="displ", y="hwy"))
 ```
   </div>
-  <div class="md:w-1/2 px-8">
+  <div class="md:w-1/2 px-4">
 ```{python echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_smooth(mapping=aes(x="displ", y="hwy")) +\
-theme_gray(base_size=20)
+geom_smooth(mapping=aes(x="displ", y="hwy"))
 ```
   </div>
 </div>
@@ -537,22 +531,19 @@ geom_smooth(mapping=aes(x="displ", y="hwy", color="drv"), show_legend=False)
   <div class="mx-auto w-3/4 md:w-1/3 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_smooth(mapping=aes(x="displ", y="hwy")) +\
-theme_gray(base_size=24)
+geom_smooth(mapping=aes(x="displ", y="hwy"))
 ```
   </div>
   <div class="mx-auto w-3/4 md:w-1/3 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_smooth(mapping=aes(x="displ", y="hwy", group="drv")) +\
-theme_gray(base_size=24)
+geom_smooth(mapping=aes(x="displ", y="hwy", group="drv"))
 ```
   </div>
   <div class="mx-auto w-3/4 md:w-1/3 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg) +\
-geom_smooth(mapping=aes(x="displ", y="hwy", color="drv"), show_legend=False) +\
-theme_gray(base_size=24)
+geom_smooth(mapping=aes(x="displ", y="hwy", color="drv"), show_legend=False)
 ```
   </div>
 </div>
@@ -642,52 +633,46 @@ Then, run the code in Python and check your predictions.
 1.  Recreate the Python code necessary to generate the following graphs.
 
 <div class="flex flex-wrap md:flex-row mb-4 ml-8">
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy")) +\
 geom_point() +\
-geom_smooth(se=False) +\
-theme_gray(base_size=20)
+geom_smooth(se=False)
 ```
 </div>
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy")) +\
 geom_smooth(aes(group="drv"), se=False) +\
-geom_point() +\
-theme_gray(base_size=20)
+geom_point()
 ```
 </div>
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy", color="drv")) +\
 geom_point() +\
-geom_smooth(se=False) +\
-theme_gray(base_size=20)
+geom_smooth(se=False)
 ```
 </div>
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy")) +\
 geom_point(aes(color="drv")) +\
-geom_smooth(se=False) +\
-theme_gray(base_size=20)
+geom_smooth(se=False)
 ```
 </div>
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy")) +\
 geom_point(aes(color="drv")) +\
-geom_smooth(aes(linetype="drv"), se=False) +\
-theme_gray(base_size=20)
+geom_smooth(aes(linetype="drv"), se=False)
 ```
 </div>
-<div class="mx-auto w-5/6 md:w-1/2 px-8">
+<div class="mx-auto w-5/6 md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=mpg, mapping=aes(x="displ", y="hwy")) +\
 geom_point(size=4, colour="white") +\
-geom_point(aes(colour="drv")) +\
-theme_gray(base_size=20)
+geom_point(aes(colour="drv"))
 ```
 </div>
 </div>
@@ -911,18 +896,16 @@ geom_bar(mapping=aes(x="cut", fill="cut"))
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=diamonds) +\
-geom_bar(mapping=aes(x="cut", colour="cut")) +\
-theme_gray(base_size=20)
+geom_bar(mapping=aes(x="cut", colour="cut"))
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(data=diamonds) +\
-geom_bar(mapping=aes(x="cut", fill="cut")) +\
-theme_gray(base_size=20)
+geom_bar(mapping=aes(x="cut", fill="cut"))
 ```
 </div>
 </div>
@@ -966,18 +949,16 @@ The stacking is performed automatically by the __position adjustment__ specified
     ```
 
     <div class="flex flex-wrap md:flex-row mb-4">
-    <div class="mx-auto md:w-1/2 px-8">
+    <div class="mx-auto md:w-1/2 px-4">
     ```{python, echo=FALSE, out.extra = ""}
     ggplot(data=diamonds, mapping=aes(x="cut", fill="clarity")) +\
-    geom_bar(alpha=1/5, position="identity") +\
-    theme_gray(base_size=20)
+    geom_bar(alpha=1/5, position="identity")
     ```
     </div>
-    <div class="mx-auto md:w-1/2 px-8">
+    <div class="mx-auto md:w-1/2 px-4">
     ```{python, echo=FALSE, out.extra = ""}
     ggplot(data=diamonds, mapping=aes(x="cut", colour="clarity")) +\
-    geom_bar(fill=None, position="identity") +\
-    theme_gray(base_size=20)
+    geom_bar(fill=None, position="identity")
     ```
     </div>
     </div>
@@ -1067,19 +1048,17 @@ Coordinate systems are probably the most complicated part of plotnine. The defau
     ```
 
     <div class="flex flex-wrap md:flex-row mb-4">
-    <div class="mx-auto md:w-1/2 px-8 md:pl-8 md:pr-16">
+    <div class="mx-auto md:w-1/2 px-4 md:pl-8 md:pr-16">
     ```{python, echo=FALSE, out.extra = ""}
     ggplot(data=mpg, mapping=aes(x="class", y="hwy")) +\
-    geom_boxplot() +\
-    theme_gray(base_size=20)
+    geom_boxplot()
     ```
     </div>
-    <div class="mx-auto md:w-1/2 px-8 md:pr-8 md:pl-0">
+    <div class="mx-auto md:w-1/2 px-4 md:pr-8 md:pl-0">
     ```{python, echo=FALSE, out.extra = ""}
     ggplot(data=mpg, mapping=aes(x="class", y="hwy")) +\
     geom_boxplot() +\
-    coord_flip() +\
-    theme_gray(base_size=20)
+    coord_flip()
     ```
     </div>
     </div>
@@ -1200,9 +1179,6 @@ labs(x="Engine displacement (L)",
      colour="Car type")
 ```
 
-
-<!-- TODO: explain how to use latex in plotnine and matplotlib -->
-
 It's possible to use mathematical equations instead of text strings. You have to tell matplotlib, which is used by plotnine to do the actuall plotting, to use LaTeX for rendering text:
 
 ```{python}
@@ -1214,8 +1190,12 @@ df = pd.DataFrame({"x": np.random.uniform(size=10),
 
 ggplot(df, aes("x", "y")) +\
 geom_point() +\
-labs(x="$$\\sum_{i = 1}^n{x_i^2}$$",
-     y="$$\\alpha + \\beta + \\frac{\\delta}{\\theta}$$")
+labs(x="$\\sum_{i = 1}^n{x_i^2}$",
+     y="$\\alpha + \\beta + \\frac{\\delta}{\\theta}$")
+```
+
+```{python, echo=FALSE}
+rc('text', usetex=False)
 ```
 
 See [the matplotlib documentation](https://matplotlib.org/3.1.1/tutorials/text/mathtext.html) for more information about how to write mathematical equations using LaTeX.
@@ -1426,7 +1406,7 @@ geom_point() +\
 scale_y_continuous(breaks=range(15, 45, 5))
 ```
 
-You can use `labels` in the same way (a list of strings the same length as `breaks`), but you can also suppress the labels altogether by passing a list of empty strings. This is useful for maps, or for publishing plots where you can't share the absolute numbers. Note that the list of labels needs to be of the same length as the list of values, so a helper function like `no_labels` is helpful:
+You can use `labels` in the same way (a list of strings the same length as `breaks`), but you can also suppress the labels altogether by passing a list of empty strings. This is useful for maps, or for publishing plots where you can't share the absolute numbers. Note that the list of labels needs to be of the same length as the list of values, so a helper function like `no_labels` is convenient:
 
 ```{python}
 def no_labels(values):
@@ -1477,27 +1457,27 @@ base + theme(subplots_adjust={'bottom': 0.3}, legend_position=(.5, 0), legend_di
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 base = ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(colour="class"))
 
-base + theme_gray(base_size=24) + theme(legend_position="right")
+base + theme(legend_position="right")
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
-base + theme_gray(base_size=19) + theme(subplots_adjust={'left': 0.3}) + theme(legend_position=(0, 0.5))
+base + theme(subplots_adjust={'left': 0.3}) + theme(legend_position=(0, 0.5))
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
-base + theme_gray(base_size=18) + theme(legend_position="top")
+base + theme(legend_position="top")
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
-base + theme_gray(base_size=18) + theme(subplots_adjust={'bottom': 0.3}, legend_position=(.5, 0), legend_direction='horizontal')
+base + theme(subplots_adjust={'bottom': 0.3}, legend_position=(.5, 0), legend_direction='horizontal')
 ```
 </div>
 </div>
@@ -1557,18 +1537,16 @@ geom_bin2d()
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(diamonds, aes("carat", "price")) +\
-geom_bin2d() +\
-theme_gray(base_size=18) 
+geom_bin2d()
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(diamonds, aes("np.log10(carat)", "np.log10(price)")) +\
-geom_bin2d() +\
-theme_gray(base_size=18)
+geom_bin2d()
 ```
 </div>
 </div>
@@ -1610,19 +1588,17 @@ scale_colour_brewer(type="qual", palette="Set1")
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(mpg, aes("displ", "hwy")) +\
-geom_point(aes(color="drv")) +\
-theme_gray(base_size=18)
+geom_point(aes(color="drv"))
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(color="drv")) +\
-scale_colour_brewer(type="qual", palette="Set1") +\
-theme_gray(base_size=18)
+scale_colour_brewer(type="qual", palette="Set1")
 ```
 </div>
 </div>
@@ -1699,8 +1675,6 @@ Note that all colour scales come in two variety: `scale_colour_x()` and `scale_f
     geom_point(aes(colour="cut"), alpha=1/20)
     ```
 
-END_COMMENT
-
 ## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
 
 There are three ways to control the plot limits:
@@ -1724,21 +1698,19 @@ geom_smooth()
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(mpg, aes("displ", "hwy")) +\
 geom_point(aes(color="class")) +\
 geom_smooth() +\
-coord_cartesian(xlim=(5, 7), ylim=(10, 30)) +\
-theme_gray(base_size=18)
+coord_cartesian(xlim=(5, 7), ylim=(10, 30))
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 ggplot(mpg.query("5 <= displ <= 7 and 10 <= hwy <= 30"), aes("displ", "hwy")) +\
 geom_point(aes(color="class")) +\
-geom_smooth() +\
-theme_gray(base_size=18)
+geom_smooth()
 ```
 </div>
 </div>
@@ -1757,5 +1729,8 @@ geom_point(aes(color="class")) +\
 geom_smooth()
 ```
 <!-- END_HIDE_MD -->
+
+
+
 
 
