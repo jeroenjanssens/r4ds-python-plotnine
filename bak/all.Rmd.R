@@ -4,12 +4,12 @@
 ```
 
 <div class="flex flex-wrap md:flex-row mb-4">
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 
 ```
 </div>
-<div class="mx-auto md:w-1/2 px-8">
+<div class="mx-auto md:w-1/2 px-4">
 ```{python, echo=FALSE, out.extra = ""}
 
 ```
@@ -23,7 +23,6 @@
 
 
 
-You can also set the `limits` on individual scales. Reducing the limits is basically equivalent to subsetting the data. It is generally more useful if you want _expand_ the limits, for example, to match scales across different plots. For example, if we extract two classes of cars and plot them separately, it's difficult to compare the plots because all three scales (the x-axis, the y-axis, and the colour aesthetic) have different ranges.
 
 <!-- ```{python out.width="50%", fig.align="default", fig.width=4} -->
   <!-- suv = mpg %>% filter(class == "suv") -->

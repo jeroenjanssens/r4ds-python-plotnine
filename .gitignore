@@ -17,3 +17,6 @@ input/plotnine.html
 output/figure
 output/r4ds-python-plotnine.blog.md
 output/r4ds-python-plotnine.div.Rmd
+
+# macOS
+.DS_Store

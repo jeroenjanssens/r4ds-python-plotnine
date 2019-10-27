@@ -25,6 +25,10 @@ output:
 <!-- END_HIDE_MD -->
 
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/datascienceworkshops/r4ds-python-plotnine/master?filepath=output%2Fr4ds-python-plotnine.ipynb)
+
+
+
 ```{r setup, echo=FALSE}
 Sys.unsetenv("RETICULATE_PYTHON_ENV")
 library(reticulate)
@@ -32,6 +36,7 @@ use_virtualenv("../venv", required = TRUE)
 # knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
 knitr::opts_chunk$set(fig.show = "hold", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center", dpi=300)
 ```
+
 
 
 # [3](https://r4ds.had.co.nz/data-visualisation.html)&nbsp;&nbsp;&nbsp;Data visualisation
@@ -68,6 +73,8 @@ rcParams.update({"figure.max_open_warning": 0,
 theme_set(theme_gray(base_size=12))
 ```
 
+
+START_COMMENT
 
 If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
@@ -270,7 +277,6 @@ Here, the color doesn't convey information about a variable, but only changes th
 * The shape of a point as a character or number, as shown below.
 
 ```{python shapes, echo=FALSE}
-#rcParams.update({"text.usetex": False})
 shapes = [".",",","o","v","^","<",">","1","2","3","4","8","s","p","P","*","h","H","+","x","X","D","d","|","_"] + list(range(12))
 labels = ["'" + s + "'" for s in shapes[:25]] + [str(s) for s in range(12)]
 
@@ -285,10 +291,6 @@ geom_text(aes(label="label"), nudge_x=0.4, size=10, color='grey') +\
 scale_shape_identity() +\
 theme_void() +\
 theme(aspect_ratio=1/2.75)
-```
-
-```{python, echo=FALSE}
-#rcParams.update({"text.usetex": True})
 ```
 
 ### [3.3.1](https://r4ds.had.co.nz/data-visualisation.html#exercises-1)&nbsp;&nbsp;&nbsp;Exercises
@@ -1675,6 +1677,8 @@ Note that all colour scales come in two variety: `scale_colour_x()` and `scale_f
     geom_point(aes(colour="cut"), alpha=1/20)
     ```
 
+END_COMMENT
+
 ## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
 
 There are three ways to control the plot limits:
@@ -1729,6 +1733,169 @@ geom_point(aes(color="class")) +\
 geom_smooth()
 ```
 <!-- END_HIDE_MD -->
+
+You can also set the `limits` on individual scales. Reducing the limits is basically equivalent to subsetting the data. It is generally more useful if you want _expand_ the limits, for example, to match scales across different plots. For example, if we extract two classes of cars and plot them separately, it's difficult to compare the plots because all three scales (the x-axis, the y-axis, and the colour aesthetic) have different ranges.
+
+
+<!-- START_HIDE_IPYNB -->
+```{python, eval=FALSE}
+mpg["drv"] = mpg["drv"].astype(str)
+suv = mpg[mpg["class"] == "suv"]
+compact = mpg[mpg["class"] == "compact"]
+
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+```
+
+
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-4">
+```{python, echo=FALSE, out.extra = ""}
+mpg["drv"] = mpg["drv"].astype(str)
+suv = mpg[mpg["class"] == "suv"]
+compact = mpg[mpg["class"] == "compact"]
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+```
+</div>
+<div class="mx-auto md:w-1/2 px-4">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+mpg["drv"] = mpg["drv"].astype(str)
+suv = mpg[mpg["class"] == "suv"]
+compact = mpg[mpg["class"] == "compact"]
+
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+```
+
+```{python}
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point()
+```
+<!-- END_HIDE_MD -->
+
+
+One way to overcome this problem is to share scales across multiple plots, training the scales with the `limits` of the full data.
+
+
+
+<!-- START_HIDE_IPYNB -->
+```{python, eval=FALSE}
+x_scale = scale_x_continuous(limits=(mpg.displ.min(), mpg.displ.max()))
+y_scale = scale_y_continuous(limits=(mpg.hwy.min(), mpg.hwy.max()))
+col_scale = scale_colour_discrete(limits=mpg.drv.unique())
+
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+```
+
+<div class="flex flex-wrap md:flex-row mb-4">
+<div class="mx-auto md:w-1/2 px-4">
+```{python, echo=FALSE, out.extra = ""}
+x_scale = scale_x_continuous(limits=(mpg.displ.min(), mpg.displ.max()))
+y_scale = scale_y_continuous(limits=(mpg.hwy.min(), mpg.hwy.max()))
+col_scale = scale_colour_discrete(limits=mpg.drv.unique())
+
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+```
+</div>
+<div class="mx-auto md:w-1/2 px-4">
+```{python, echo=FALSE, out.extra = ""}
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+```
+</div>
+</div>
+<!-- END_HIDE_IPYNB -->
+<!-- START_HIDE_MD -->
+```{python}
+x_scale = scale_x_continuous(limits=(mpg.displ.min(), mpg.displ.max()))
+y_scale = scale_y_continuous(limits=(mpg.hwy.min(), mpg.hwy.max()))
+col_scale = scale_colour_discrete(limits=mpg.drv.unique())
+
+ggplot(suv, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+```
+
+```{python}
+ggplot(compact, aes("displ", "hwy", colour="drv")) +\
+geom_point() +\
+x_scale +\
+y_scale +\
+col_scale
+```
+<!-- END_HIDE_MD -->
+
+In this particular case, you could have simply used faceting, but this technique is useful more generally, if for instance, you want spread plots over multiple pages of a report.
+
+## [28.6](https://r4ds.had.co.nz/graphics-for-communication.html#themes)&nbsp;&nbsp;&nbsp;Themes
+
+
+Finally, you can customise the non-data elements of your plot with a theme:
+
+```{python}
+ggplot(mpg, aes("displ", "hwy")) +\
+geom_point(aes(color="class")) +\
+geom_smooth(se=False) +\
+theme_xkcd()
+```
+
+plotnine includes twelve themes by default. The figure below shows eight of those. The [documentation](https://plotnine.readthedocs.io/en/stable/api.html#themes) lists all available themes.
+
+```{r, echo=FALSE, dev="png", out.extra="class=\"md:w-2/3\""}
+knitr::include_graphics("images/visualization-themes.png")
+```
+
+Many people wonder why the default theme has a grey background. This was a deliberate choice because it puts the data forward while still making the grid lines visible. The white grid lines are visible (which is important because they significantly aid position judgements), but they have little visual impact and we can easily tune them out. The grey background gives the plot a similar typographic colour to the text, ensuring that the graphics fit in with the flow of a document without jumping out with a bright white background. Finally, the grey background creates a continuous field of colour which ensures that the plot is perceived as a single visual entity.
+
+It's also possible to control individual components of each theme, like the size and colour of the font used for the y axis. Unfortunately, this level of detail is outside the scope of this book, so you'll need to read the [ggplot2 book](https://amzn.com/331924275X) for the full details. You can also create your own themes, if you are trying to match a particular corporate or journal style.
+
+
+## [28.7](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots)&nbsp;&nbsp;&nbsp;Saving your plots
+
+
+
+
+
+
+
+
+## [28.8](https://r4ds.had.co.nz/graphics-for-communication.html#learning-more-4)&nbsp;&nbsp;&nbsp;Learning more
+
+The absolute best place to learn more is the ggplot2 book: [_plotnine: Elegant graphics for data analysis_](https://amzn.com/331924275X). It goes into much more depth about the underlying theory, and has many more examples of how to combine the individual pieces to solve practical problems. Unfortunately, the book is not available online for free, although you can find the source code at <https://github.com/hadley/plotnine-book>.
+
+
+
 
 
 
