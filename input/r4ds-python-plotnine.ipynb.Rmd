@@ -1876,6 +1876,10 @@ plotnine includes twelve themes by default. The figure below shows eight of thos
 knitr::include_graphics("images/visualization-themes.png")
 ```
 
+<!-- START_HIDE_MD -->
+<img src="../input/images/visualization-themes.png" width="500" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
+
 Many people wonder why the default theme has a grey background. This was a deliberate choice because it puts the data forward while still making the grid lines visible. The white grid lines are visible (which is important because they significantly aid position judgements), but they have little visual impact and we can easily tune them out. The grey background gives the plot a similar typographic colour to the text, ensuring that the graphics fit in with the flow of a document without jumping out with a bright white background. Finally, the grey background creates a continuous field of colour which ensures that the plot is perceived as a single visual entity.
 
 It's also possible to control individual components of each theme, like the size and colour of the font used for the y axis. Unfortunately, this level of detail is outside the scope of this book, so you'll need to read the [ggplot2 book](https://amzn.com/331924275X) for the full details. You can also create your own themes, if you are trying to match a particular corporate or journal style.
