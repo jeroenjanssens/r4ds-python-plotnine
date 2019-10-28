@@ -5,7 +5,7 @@ tagline: 'A translation of the visualisation chapters from "R for Data Science" 
 author: jeroen-janssens
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 type: tutorial
-min-read: 30
+min-read: 42
 banner:
   file: holly-stratton-XTHa-47HjjI-unsplash.jpg
   author: Holly Stratton
@@ -37,6 +37,13 @@ use_virtualenv("../venv", required = TRUE)
 knitr::opts_chunk$set(fig.show = "hold", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center", dpi=300)
 ```
 
+```{r, echo=FALSE, dev="png", out.extra="class=\"w-1/2 md:w-1/3 lg:w-1/4\""}
+knitr::include_graphics("images/cover.png")
+```
+
+<!-- START_HIDE_MD -->
+<img src="../input/images/cover.png" width="250" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
 
 
 # [3](https://r4ds.had.co.nz/data-visualisation.html)&nbsp;&nbsp;&nbsp;Data visualisation
@@ -72,9 +79,6 @@ rcParams.update({"figure.max_open_warning": 0,
 
 theme_set(theme_gray(base_size=12))
 ```
-
-
-START_COMMENT
 
 If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it, then run the code once again.
 
@@ -734,6 +738,10 @@ The algorithm used to calculate new values for a graph is called a __stat__, sho
 knitr::include_graphics("images/visualization-stat-bar.png")
 ```
 
+<!-- START_HIDE_MD -->
+<img src="../input/images/visualization-stat-bar.png" width="900" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
+
 You can learn which stat a geom uses by inspecting the default value for the `stat` argument. For example, `?geom_bar` shows that the default value for `stat` is "count", which means that `geom_bar()` uses `stat_count()`. `stat_count()` is documented on the same page as `geom_bar()`, and if you scroll down you can find a section called "Computed variables". That describes how it computes two new variables: `count` and `prop`.
 
 You can generally use geoms and stats interchangeably. For example, you can recreate the previous plot using `stat_count()` instead of `geom_bar()`:
@@ -1132,17 +1140,29 @@ To see how this works, consider how you could build a basic plot from scratch: y
 knitr::include_graphics("images/visualization-grammar-1.png")
 ```
 
+<!-- START_HIDE_MD -->
+<img src="../input/images/visualization-grammar-1.png" width="900" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
+
 Next, you could choose a geometric object to represent each observation in the transformed data. You could then use the aesthetic properties of the geoms to represent variables in the data. You would map the values of each variable to the levels of an aesthetic.
 
 ```{r, echo=FALSE, dev="png", out.extra="class=\"w-full\""}
 knitr::include_graphics("images/visualization-grammar-2.png")
 ```
 
+<!-- START_HIDE_MD -->
+<img src="../input/images/visualization-grammar-2.png" width="900" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
+
 You'd then select a coordinate system to place the geoms into. You'd use the location of the objects (which is itself an aesthetic property) to display the values of the x and y variables. At that point, you would have a complete graph, but you could further adjust the positions of the geoms within the coordinate system (a position adjustment) or split the graph into subplots (faceting). You could also extend the plot by adding one or more additional layers, where each additional layer uses a dataset, a geom, a set of mappings, a stat, and a position adjustment.
 
 ```{r, echo=FALSE, dev="png", out.extra="class=\"w-full\""}
 knitr::include_graphics("images/visualization-grammar-3.png")
 ```
+
+<!-- START_HIDE_MD -->
+<img src="../input/images/visualization-grammar-3.png" width="900" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
 
 You could use this method to build _any_ plot that you imagine. In other words, you can use the code template that you've learned in this chapter to build hundreds of thousands of unique plots.
 
@@ -1633,6 +1653,10 @@ The ColorBrewer scales are documented online at <http://colorbrewer2.org/> and m
 knitr::include_graphics("images/brewer-1.png")
 ```
 
+<!-- START_HIDE_MD -->
+<img src="../input/images/brewer-1.png" width="400" style="margin-left: 0px;">
+<!-- END_HIDE_MD -->
+
 When you have a predefined mapping between values and colours, use `scale_colour_manual()`. For example, if we map presidential party to colour, we want to use the standard mapping of red for Republicans and blue for Democrats:
 
 
@@ -1676,8 +1700,6 @@ Note that all colour scales come in two variety: `scale_colour_x()` and `scale_f
     ggplot(diamonds, aes("carat", "price")) +\
     geom_point(aes(colour="cut"), alpha=1/20)
     ```
-
-END_COMMENT
 
 ## [28.5](https://r4ds.had.co.nz/graphics-for-communication.html#zooming)&nbsp;&nbsp;&nbsp;Zooming
 
@@ -1893,15 +1915,7 @@ It's also possible to control individual components of each theme, like the size
 
 
 
-
 ## [28.8](https://r4ds.had.co.nz/graphics-for-communication.html#learning-more-4)&nbsp;&nbsp;&nbsp;Learning more
 
-The absolute best place to learn more is the ggplot2 book: [_plotnine: Elegant graphics for data analysis_](https://amzn.com/331924275X). It goes into much more depth about the underlying theory, and has many more examples of how to combine the individual pieces to solve practical problems. Unfortunately, the book is not available online for free, although you can find the source code at <https://github.com/hadley/plotnine-book>.
-
-
-
-
-
-
-
+The absolute best place to learn more is the ggplot2 book: [_ggplot2: Elegant graphics for data analysis_](https://amzn.com/331924275X). It goes into much more depth about the underlying theory, and has many more examples of how to combine the individual pieces to solve practical problems. Unfortunately, the book is not available online for free, although you can find the source code at <https://github.com/hadley/ggplot2-book>.
 
