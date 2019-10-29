@@ -30,10 +30,8 @@ output:
 
 
 ```{r setup, echo=FALSE}
-Sys.unsetenv("RETICULATE_PYTHON_ENV")
 library(reticulate)
 use_virtualenv("../venv", required = TRUE)
-# knitr::opts_chunk$set(fig.show = "hold", dev = "svg", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center")
 knitr::opts_chunk$set(fig.show = "hold", out.extra = "class=\"md:w-3/4 lg:w-2/3\"", fig.align = "center", dpi=300)
 ```
 
