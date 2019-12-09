@@ -1,5 +1,5 @@
 /\[\^\]/ {
-    split($0, parts, /\[\^\]\(|\)/)
+    split($0, parts, /\[\^\]\(|\.\)/)
     for (p = 1; p < length(parts); p++) {
         if (p % 2) {
             printf "%s[^%d]", parts[p], ++i
@@ -19,6 +19,6 @@ END {
     print "\n## Footnotes\n"
 
     for (i = 1; i <= length(notes); i++) {
-        print "[^" i "]: " notes[i]
+        print "[^" i "]: " notes[i] "."
     }
 }

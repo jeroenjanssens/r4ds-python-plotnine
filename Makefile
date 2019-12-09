@@ -36,6 +36,7 @@ output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile Jupyter note
 	sed -e '/<!-- START_HIDE_IPYNB -->/,/<!-- END_HIDE_IPYNB -->/d' | \
 	sed -e '/_HIDE_MD/d' | \
 	sed -e '/START_COMMENT/,/END_COMMENT/d' | \
+	awk -f input/footnotes.awk | \
 	cat -s | \
 	sed -re 's/\[\^([0-9+])\]: (.*)$$/<span id="fn:\1">\1\. \2<\/span>\n/' | \
 	sed -re 's/\[\^([0-9+])\]/[<sup>\1<\/sup>](#fn:\1)/g' | \
@@ -44,7 +45,8 @@ output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile Jupyter note
 output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant for R markdown
 	< $< sed -e '/<!-- START_HIDE_MD -->/,/<!-- END_HIDE_MD -->/d' | \
 	sed -e '/_HIDE_IPYNB/d' | \
-	sed -e '/START_COMMENT/,/END_COMMENT/d' > $@
+	sed -e '/START_COMMENT/,/END_COMMENT/d' | \
+	awk -f input/footnotes.awk > $@
 
 output/$(NAME).Rmd: output/$(NAME).div.Rmd # remove div elements as they're only used by the blog post
 	< $< sed -re '/<\/?div/d;s/ class="[^"]"//g' > $@
