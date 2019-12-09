@@ -1,0 +1,31 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, echo=FALSE}
+library(knitr)
+library(reticulate)
+library(sessioninfo)
+
+use_virtualenv("./venv", required = TRUE)
+opts_chunk$set(comment = "")
+```
+
+# Plotnine: Grammar of Graphics for Python
+
+A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.
+
+
+## R packages used
+
+```{r}
+session_info()
+```
+
+## Python packages used
+
+```{bash}
+. venv/bin/activate && pip freeze
+```
