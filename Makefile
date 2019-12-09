@@ -24,7 +24,7 @@ venv: requirements.txt
 	python -m ipykernel install --user --name=$(NAME) # install kernelspec
 
 renv/library: renv.lock
-	Rscript --vanilla -e 'if (!requireNamespace("remotes")) install.packages("remotes"); remotes::install_github("rstudio/renv"); renv::restore()' 
+	Rscript --vanilla -e 'if (!requireNamespace("renv")) install.packages("renv"); renv::restore()' 
 	touch $@
 	
 clean:
