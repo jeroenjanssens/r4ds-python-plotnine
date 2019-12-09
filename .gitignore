@@ -4,6 +4,7 @@ renv/library
 .Rhistory
 .RData
 .Ruserdata
+README.html
 
 # Python
 venv/

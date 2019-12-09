@@ -84,4 +84,4 @@ lab:
 	jupyter lab
 
 README.md: README.Rmd venv renv/library
-	Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("$<", "$@")'
+	Rscript --vanilla -e 'source("renv/activate.R"); rmarkdown::render("$<")'
