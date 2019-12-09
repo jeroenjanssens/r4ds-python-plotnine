@@ -40,7 +40,7 @@ output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile Jupyter note
 	cat -s | \
 	sed -re 's/\[\^([0-9+])\]: (.*)$$/<span id="fn:\1">\1\. \2<\/span>\n/' | \
 	sed -re 's/\[\^([0-9+])\]/[<sup>\1<\/sup>](#fn:\1)/g' | \
-	jupytext --from rmarkdown --to notebook --set-kernel r4ds-python-plotnine --execute > $@
+	jupytext --from rmarkdown --to notebook --set-kernel $(NAME) --execute > $@
 
 output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant for R markdown
 	< $< sed -e '/<!-- START_HIDE_MD -->/,/<!-- END_HIDE_MD -->/d' | \
@@ -69,7 +69,7 @@ $(POST): output/$(NAME).blog.md $(SITE)/content/_posts $(SITE)/assets/img/blog
 	sed '/## *$$/d' | \
 	sed '/## <ggplot:/d' | \
 	sed '/^ *```$$/{N; /^ *``` *\n *``` *$$/d}' | \
-	sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/r4ds-python-plotnine|.|g' | \
+	sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/$(NAME)|.|g' | \
 	sed -re "s;(figure/)|(images/);/assets/img/blog/$(SLUG)/;" > $@
 
 blogpost: $(POST) # not meant to be run by mere mortals
