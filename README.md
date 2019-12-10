@@ -5,9 +5,9 @@
 
 ##### A translation of the visualisation chapters from “R for Data Science” to Python using Plotnine and Pandas.
 
-This repository contains all the code and text to generate [this blog
-post](https://www.datascienceworkshops.com/blog/plotnine-grammar-of-graphics-for-python).
-The blog post is also available as a Jupyter notebook and an R notebook;
+This repository contains all the code and text to generate [this
+tutorial](https://www.datascienceworkshops.com/blog/plotnine-grammar-of-graphics-for-python).
+The tutorial is also available as a Jupyter notebook and an R notebook;
 these are located in the *output* directory.
 
 ## Run notebooks
@@ -32,7 +32,7 @@ If you change the input source, i.e.,
   - Run `make rmd` to re-create the R notebook
     *output/r4ds-python-plotnine.Rmd*.
 
-This blog post and the accompanying code has been written and tested on
+This tutorial and the accompanying code has been written and tested on
 macOS. I suspect that it also works on other Unix and Linux
 distributions. I doubt that it works out of the box on Windows. The
 *Makefile* and *requirements.txt* files may provide useful hints on how
@@ -84,7 +84,7 @@ sessioninfo::session_info()
      P yaml          2.2.0   2018-07-25 [?] CRAN (R 3.6.0)
     
     [1] /Users/jeroen/repos/datascienceworkshops/r4ds-python-plotnine/renv/library/R-3.6/x86_64-apple-darwin15.6.0
-    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpYf6nCh/renv-system-library
+    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpF8ov4T/renv-system-library
     
      P ── Loaded and on-disk path mismatch.
 
@@ -164,8 +164,8 @@ sessioninfo::session_info()
 
 ## License
 
-The blog post, the Jupyter notebook and the R notebook are licenced,
-just like the original text, under the [Creative Commons
+The tutorial, the Jupyter notebook and the R notebook are licenced, just
+like the original text, under the [Creative Commons
 Attribution-NonCommercial-NoDerivs 3.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 License while everything else is licensed under the [MIT
 License](https://raw.githubusercontent.com/datascienceworkshops/r4ds-python-plotnine/master/LICENSE).
