@@ -38,8 +38,8 @@ output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile to a Jupyter
 	sed -e '/START_COMMENT/,/END_COMMENT/d' | \
 	awk -f input/footnotes.awk | \
 	cat -s | \
-	sed -re 's/\[\^([0-9+])\]: (.*)$$/<span id="fn:\1">\1\. \2<\/span>\n/' | \
-	sed -re 's/\[\^([0-9+])\]/[<sup>\1<\/sup>](#fn:\1)/g' | \
+	sed -re 's/\[\^([0-9]+)\]: (.*)$$/<span id="fn:\1">\1\. \2<\/span>\n/' | \
+	sed -re 's/\[\^([0-9]+)\]/[<sup>\1<\/sup>](#fn:\1)/g' | \
 	jupytext --from rmarkdown --to notebook --set-kernel $(NAME) --execute > $@
 
 output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant for R markdown
