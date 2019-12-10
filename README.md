@@ -3,13 +3,45 @@
 
 # Plotnine: Grammar of Graphics for Python
 
-A translation of the visualisation chapters from “R for Data Science” to
-Python using Plotnine and Pandas.
+##### A translation of the visualisation chapters from “R for Data Science” to Python using Plotnine and Pandas.
+
+This repository contains all the code and text to generate [this blog
+post](https://www.datascienceworkshops.com/blog/plotnine-grammar-of-graphics-for-python).
+The blog post is also available as a Jupyter notebook and an R notebook;
+these are located in the *output* directory.
+
+## Run notebooks
+
+To run these notebooks, make sure you have the necessary dependencies
+installed. After cloning this repository you can:
+
+  - Run `make venv` to create a virtualenv with Python 3.7, install the
+    packages listed in *requirements.txt*, and create a Jupyter kernel
+    specification.
+  - Run `make lab` to start Jupyter Lab using the virtualenv.
+  - Run `make renv/library` to use to install all the required R
+    packages.
+
+## Re-create notebooks from source
+
+If you change the input source, i.e.,
+*input/r4ds-python-plotnine.ipynb.Rmd*, you can:
+
+  - Run `make ipynb` to re-create the Jupyter notebook
+    *output/r4ds-python-plotnine.ipynb*.
+  - Run `make rmd` to re-create the R notebook
+    *output/r4ds-python-plotnine.Rmd*.
+
+This blog post and the accompanying code has been written and tested on
+macOS. I suspect that it also works on other Unix and Linux
+distributions. I doubt that it works out of the box on Windows. The
+*Makefile* and *requirements.txt* files may provide useful hints on how
+to install the dependencies.
 
 ## R packages used
 
 ``` r
-session_info()
+sessioninfo::session_info()
 ```
 
     ─ Session info ───────────────────────────────────────────────────────────────
@@ -22,7 +54,7 @@ session_info()
      collate  en_US.UTF-8                 
      ctype    en_US.UTF-8                 
      tz       Europe/Amsterdam            
-     date     2019-12-09                  
+     date     2019-12-10                  
     
     ─ Packages ───────────────────────────────────────────────────────────────────
      ! package     * version date       lib source        
@@ -42,7 +74,7 @@ session_info()
      P reticulate  * 1.13    2019-07-24 [?] CRAN (R 3.6.0)
      P rlang         0.4.2   2019-11-23 [?] CRAN (R 3.6.0)
      P rmarkdown     1.18    2019-11-27 [?] CRAN (R 3.6.0)
-     P sessioninfo * 1.1.1   2018-11-05 [?] CRAN (R 3.6.0)
+     P sessioninfo   1.1.1   2018-11-05 [?] CRAN (R 3.6.0)
      P stringi       1.4.3   2019-03-12 [?] CRAN (R 3.6.0)
      P stringr       1.4.0   2019-02-10 [?] CRAN (R 3.6.0)
      P withr         2.1.2   2018-03-15 [?] CRAN (R 3.6.0)
@@ -50,7 +82,7 @@ session_info()
      P yaml          2.2.0   2018-07-25 [?] CRAN (R 3.6.0)
     
     [1] /Users/jeroen/repos/datascienceworkshops/r4ds-python-plotnine/renv/library/R-3.6/x86_64-apple-darwin15.6.0
-    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpdFCOov/renv-system-library
+    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpKX4AI0/renv-system-library
     
      P ── Loaded and on-disk path mismatch.
 
@@ -127,3 +159,11 @@ session_info()
     webencodings==0.5.1
     widgetsnbextension==3.5.1
     zipp==0.6.0
+
+## License
+
+The blog post, the Jupyter notebook and the R notebook are licenced,
+just like the original text, under the [Creative Commons
+Attribution-NonCommercial-NoDerivs 3.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+License while everything else is licensed under the [MIT
+License](https://raw.githubusercontent.com/datascienceworkshops/r4ds-python-plotnine/master/LICENSE).

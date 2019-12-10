@@ -30,7 +30,7 @@ renv/library: renv.lock
 clean:
 	rm -rf output
 
-output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile Jupyter notebook
+output/$(NAME).ipynb: input/$(NAME).ipynb.Rmd output venv # compile to a Jupyter notebook
 	. venv/bin/activate; \
 	< $< sed -e '/^---$$/,/^---$$/d;/```{r/,/```/d;/TODO/d' | \
 	sed -e '/<!-- START_HIDE_IPYNB -->/,/<!-- END_HIDE_IPYNB -->/d' | \
@@ -48,15 +48,13 @@ output/$(NAME).div.Rmd: input/$(NAME).ipynb.Rmd output # remove lines not meant 
 	sed -e '/START_COMMENT/,/END_COMMENT/d' | \
 	awk -f input/footnotes.awk > $@
 
-output/$(NAME).Rmd: output/$(NAME).div.Rmd # remove div elements as they're only used by the blog post
-	< $< sed -re '/<\/?div/d;s/ class="[^"]"//g' > $@
+output/$(NAME).Rmd: output/$(NAME).div.Rmd # remove divs and extra yaml as they're only used by the blog post
+	< $< sed -re '/^tagline:/i ---' | \
+	sed -re '/^tagline:/,/^---/d;/<\/?div/d;s/ class="[^"]"//g' > $@
 
 output/$(NAME).blog.md: output/$(NAME).div.Rmd venv renv/library
 	Rscript --vanilla -e 'source("renv/activate.R"); knitr::knit("$<", "$@")'
 	
-rmd: output/$(NAME).Rmd
-ipynb: output/$(NAME).ipynb
-
 $(POST): output/$(NAME).blog.md $(SITE)/content/_posts $(SITE)/assets/img/blog
 	rm -f $(SITE)/content/_posts/*-$(SLUG).md
 	mkdir -p $(SITE)/assets/img/blog/$(SLUG)/
@@ -66,11 +64,17 @@ $(POST): output/$(NAME).blog.md $(SITE)/content/_posts $(SITE)/assets/img/blog
 	cat $< | \
 	sed 's/ alt="[^"]*"//g' | \
 	sed 's/ title="[^"]*"//g' | \
-	sed '/## *$$/d' | \
-	sed '/## <ggplot:/d' | \
+	sed '/<ggplot:/d' | \
 	sed '/^ *```$$/{N; /^ *``` *\n *``` *$$/d}' | \
 	sed -re 's|/Users/[a-z]+/repos/datascienceworkshops/$(NAME)|.|g' | \
 	sed -re "s;(figure/)|(images/);/assets/img/blog/$(SLUG)/;" > $@
+
+README.md: README.Rmd venv renv/library
+	Rscript --vanilla -e 'source("renv/activate.R"); rmarkdown::render("$<")'
+
+rmd: output/$(NAME).Rmd
+
+ipynb: output/$(NAME).ipynb
 
 blogpost: $(POST) # not meant to be run by mere mortals
 
@@ -79,9 +83,7 @@ anchors:
 	grep 'data-level' | \
 	awk -F\" '$$4 ~ /^(3|28)/ {print "["$$4"](https://r4ds.had.co.nz/"$$8")&nbsp;&nbsp;&nbsp;"}'
 
-lab:
+lab: venv
 	. venv/bin/activate
 	jupyter lab
 
-README.md: README.Rmd venv renv/library
-	Rscript --vanilla -e 'source("renv/activate.R"); rmarkdown::render("$<")'
