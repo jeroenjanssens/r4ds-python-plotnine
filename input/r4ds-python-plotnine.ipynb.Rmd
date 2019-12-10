@@ -1,7 +1,14 @@
 ---
-layout: post
 title: "Plotnine: Grammar of Graphics for Python"
+output:
+  html_notebook:
+    fig_retina: 2
+  md_document:
+    variant: markdown_github
+    preserve_yaml: true
+    fig_retina: 2
 tagline: 'A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.'
+layout: post
 author: jeroen-janssens
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 type: tutorial
@@ -10,13 +17,12 @@ banner:
   file: holly-stratton-XTHa-47HjjI-unsplash.jpg
   author: Holly Stratton
   url: https://unsplash.com/photos/XTHa-47HjjI
-output:
-  html_document:
-    fig_retina: 2
-  md_document:
-    variant: markdown_github
-    preserve_yaml: true
-    fig_retina: 2
+related:
+  type: row
+  md: items-stretch
+  items:
+  - type: workshop
+    id: professional-data-visualisation-with-r
 ---
 
 <!-- START_HIDE_MD -->
