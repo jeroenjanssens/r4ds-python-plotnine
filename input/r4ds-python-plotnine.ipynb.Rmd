@@ -47,9 +47,9 @@ knitr::opts_chunk$set(fig.show = "hold",
 I'm a staunch proponent of ggplot2. The underlying grammar of graphics is accompanied by a consistent API that allows you to quickly and iteratively create different types of beautiful data visualisations while rarely having to consult the documentation. A welcoming set of properties when doing exploratory data analysis.
 
 I must admit that I haven't tried every data visualisation package there is for Python, but when it comes to the most popular ones, I personally find them either 
-[convenient but limited](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html),
-[flexible but complicated](https://matplotlib.org/), or
-[beautiful but inconsistent](https://seaborn.pydata.org/). Your mileage may vary. plotnine, on the other hands, shows a lot of promise.
+convenient but limited ([pandas](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html)),
+flexible but complicated ([matplotlib](https://matplotlib.org/)), or
+beautiful but inconsistent ([seaborn](https://seaborn.pydata.org/)). Your mileage may vary. plotnine, on the other hand, shows a lot of promise.
 I estimate it currently has a 95% coverage of ggplot2's functionality, and it's still actively being developed.
 All in all, as someone who uses both R and Python, I'm very pleased to be able to transfer my ggplot2 knowledge to the Python ecosystem.
 
@@ -129,7 +129,7 @@ If you run this code and get the error message `ModuleNotFoundError: No module n
 ! pip install plotnine[all]
 ```
 
-You only need to install a package once, but you need to reload it every time you start a new session.
+You only need to install a package once, but you need to import it every time you run your script or (re)start the kernel.
 
 
 ## [3.2](https://r4ds.had.co.nz/data-visualisation.html#first-steps)&nbsp;&nbsp;&nbsp;First steps
