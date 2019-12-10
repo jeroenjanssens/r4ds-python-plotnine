@@ -59,18 +59,20 @@ sessioninfo::session_info()
     ─ Packages ───────────────────────────────────────────────────────────────────
      ! package     * version date       lib source        
      P assertthat    0.2.1   2019-03-21 [?] CRAN (R 3.6.0)
-     P cli           1.1.0   2019-03-19 [?] CRAN (R 3.6.0)
+     P cli           2.0.0   2019-12-09 [?] CRAN (R 3.6.1)
      P crayon        1.3.4   2017-09-16 [?] CRAN (R 3.6.0)
      P digest        0.6.23  2019-11-23 [?] CRAN (R 3.6.0)
      P evaluate      0.14    2019-05-28 [?] CRAN (R 3.6.0)
+     P fansi         0.4.0   2018-10-05 [?] CRAN (R 3.6.0)
+     P glue          1.3.1   2019-03-12 [?] CRAN (R 3.6.0)
      P htmltools     0.4.0   2019-10-04 [?] CRAN (R 3.6.0)
      P jsonlite      1.6     2018-12-07 [?] CRAN (R 3.6.0)
      P knitr       * 1.26    2019-11-12 [?] CRAN (R 3.6.0)
-     P lattice       0.20-38 2018-11-04 [?] CRAN (R 3.6.0)
+     P lattice       0.20-38 2018-11-04 [?] CRAN (R 3.6.1)
      P magrittr      1.5     2014-11-22 [?] CRAN (R 3.6.0)
      P Matrix        1.2-18  2019-11-27 [?] CRAN (R 3.6.0)
      P Rcpp          1.0.3   2019-11-08 [?] CRAN (R 3.6.0)
-     P renv          0.9.1   2019-12-09 [?] CRAN (R 3.6.1)
+     P renv          0.9.2   2019-12-09 [?] CRAN (R 3.6.1)
      P reticulate  * 1.13    2019-07-24 [?] CRAN (R 3.6.0)
      P rlang         0.4.2   2019-11-23 [?] CRAN (R 3.6.0)
      P rmarkdown     1.18    2019-11-27 [?] CRAN (R 3.6.0)
@@ -82,7 +84,7 @@ sessioninfo::session_info()
      P yaml          2.2.0   2018-07-25 [?] CRAN (R 3.6.0)
     
     [1] /Users/jeroen/repos/datascienceworkshops/r4ds-python-plotnine/renv/library/R-3.6/x86_64-apple-darwin15.6.0
-    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpKX4AI0/renv-system-library
+    [2] /private/var/folders/8h/88ch3k996hb0t11db8bj9pzh0000gn/T/RtmpYf6nCh/renv-system-library
     
      P ── Loaded and on-disk path mismatch.
 
