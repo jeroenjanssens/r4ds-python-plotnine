@@ -10,7 +10,7 @@ NAME = r4ds-python-plotnine
 # SLUG, SITE, and POST are only used to produce the blog post at datascienceworkshops.com 
 SLUG = plotnine-grammar-of-graphics-for-python
 SITE = ~/repos/mine/dsw-com
-POST = $(SITE)/content/_posts/$(shell date +'%Y-%m-%d')-$(SLUG).md
+POST = $(SITE)/content/_posts/2019-12-11-$(SLUG).md
 
 output:
 	mkdir -p $@

@@ -10,7 +10,7 @@ output:
 tagline: 'A translation of the visualisation chapters from "R for Data Science" to Python using Plotnine and Pandas.'
 layout: post
 author: jeroen-janssens
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "11 December, 2019"
 type: tutorial
 min-read: 42
 banner:
@@ -21,6 +21,8 @@ related:
   type: row
   md: items-stretch
   items:
+  - type: post
+    id: heuristics-for-translating-ggplot2-to-plotnine
   - type: workshop
     id: professional-data-visualisation-with-r
 ---
