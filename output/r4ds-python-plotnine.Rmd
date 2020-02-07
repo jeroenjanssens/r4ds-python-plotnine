@@ -40,8 +40,8 @@ Instead of writing one from scratch, I turned to the, in my opinion, best free t
 knitr::include_graphics("images/cover.png")
 ```
 
-All I had to do was translate the visualization chapters (chapter 3 and 28) from R and ggplot2 to Python and plotnine.
-I would like thank Hadley, Garrett, and O'Reilly Media, for granting me permission to do so.
+All I had to do was translate[^2] the visualization chapters (chapter 3 and 28) from R and ggplot2 to Python and plotnine.
+I would like to thank Hadley, Garrett, and O'Reilly Media, for granting me permission to do so.
 Translating an existing text is quicker than writing a new one, and has the benefit that it becomes possible to compare both the syntax and coverage of plotnine to ggplot2.
 
 However, while quicker, translating is not always straightforward.
@@ -49,7 +49,7 @@ I have tried to change as little as possible to the original text while making s
 In case any errors or falsehoods have been introduced due to translation, then I'm the one to blame.
 For example, to the best of my knowledge, neither authors have made any claims about plotnine.
 If you find such an error and think it is fixable, then it would be greatly appreciated if you'd let me know by [creating an issue on Github](https://github.com/datascienceworkshops/r4ds-python-plotnine/issues). Thank you.
-The section numbers in this tutorial link back to the corresponding section of the original text, in case you want to compare them.[^2] Only this preface and the few footnotes scattered among the text are entirely mine.
+The section numbers in this tutorial link back to the corresponding section of the original text, in case you want to compare them.[^3] Only this preface and the few footnotes scattered among the text are entirely mine.
 
 This tutorial is also available as a [Jupyter notebook](https://github.com/datascienceworkshops/r4ds-python-plotnine/blob/master/output/r4ds-python-plotnine.ipynb) and an [R notebook](https://github.com/datascienceworkshops/r4ds-python-plotnine/blob/master/output/r4ds-python-plotnine.Rmd) in case you want to follow along.
 If you clone the [Github repository](https://github.com/datascienceworkshops/r4ds-python-plotnine) then you can find the notebooks in the `output` directory.
@@ -76,7 +76,7 @@ If you'd like to learn more about the theoretical underpinnings of plotnine befo
 
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
-This tutorial focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this tutorial, import[^3] the necessary packages by running this code:
+This tutorial focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this tutorial, import[^4] the necessary packages by running this code:
 
 ```{python import}
 from plotnine import *
@@ -98,7 +98,7 @@ theme_set(theme_gray(base_size=12))
 ```
 
 
-If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it[^4], then run the code once again.
+If you run this code and get the error message `ModuleNotFoundError: No module named 'plotnine'`, you'll need to first install it[^5], then run the code once again.
 
 ```
 ! pip install plotnine[all]
@@ -131,7 +131,7 @@ To learn more about `mpg`, open its help page by running `?mpg`.
 
 ### [3.2.2](https://r4ds.had.co.nz/data-visualisation.html#creating-a-ggplot)&nbsp;&nbsp;&nbsp;Creating a ggplot
 
-To plot `mpg`, run this code[^5] to put `displ` on the x-axis and `hwy` on the y-axis:
+To plot `mpg`, run this code[^6] to put `displ` on the x-axis and `hwy` on the y-axis:
 
 ```{python}
 ggplot(data=mpg) +\
@@ -231,7 +231,7 @@ ggplot(data=mpg) +\
 geom_point(mapping=aes(x="displ", y="hwy", size="class"))
 ```
 
-Similarly, we could have mapped `manufacturer` to the _alpha_ aesthetic, which controls the transparency of the points, or to the _shape_ aesthetic, which controls the shape of the points.[^6]
+Similarly, we could have mapped `manufacturer` to the _alpha_ aesthetic, which controls the transparency of the points, or to the _shape_ aesthetic, which controls the shape of the points.[^7]
 
 ```{python echo=FALSE}
 warnings.filterwarnings("ignore")
@@ -294,7 +294,7 @@ theme_void() +\
 theme(aspect_ratio=1/2.75)
 ```
 
-### [3.3.1](https://r4ds.had.co.nz/data-visualisation.html#exercises-1)&nbsp;&nbsp;&nbsp;Exercises[^7]
+### [3.3.1](https://r4ds.had.co.nz/data-visualisation.html#exercises-1)&nbsp;&nbsp;&nbsp;Exercises[^8]
 
 1.  Which variables in `mpg` are categorical? Which variables are continuous?
     (Hint: type `?mpg` to read the documentation for the dataset). How
@@ -773,7 +773,7 @@ geom_point()
 
 ## [3.9](https://r4ds.had.co.nz/data-visualisation.html#coordinate-systems)&nbsp;&nbsp;&nbsp;Coordinate systems
 
-Coordinate systems are probably the most complicated part of plotnine. The default coordinate system is the Cartesian coordinate system where the x and y positions act independently to determine the location of each point. There is one other coordinate system that is occasionally helpful.[^8]
+Coordinate systems are probably the most complicated part of plotnine. The default coordinate system is the Cartesian coordinate system where the x and y positions act independently to determine the location of each point. There is one other coordinate system that is occasionally helpful.[^9]
 
 *   `coord_flip()` switches the x and y axes. This is useful (for example), if you want horizontal boxplots. It's also useful for long labels: it's hard to get them to fit without overlapping on the x-axis.
     ```{python, eval=FALSE}
@@ -880,7 +880,7 @@ labs(title="Fuel efficiency generally decreases with engine size")
 
 The purpose of a plot title is to summarise the main finding. Avoid titles that just describe what the plot is, e.g. "A scatterplot of engine displacement vs. fuel economy".
 
-You can also use `labs()` to replace the axis and legend titles.[^9] It's usually a good idea to replace short variable names with more detailed descriptions, and to include the units.
+You can also use `labs()` to replace the axis and legend titles.[^10] It's usually a good idea to replace short variable names with more detailed descriptions, and to include the units.
 
 ```{python, message=FALSE}
 ggplot(mpg, aes("displ", "hwy")) +\
@@ -962,7 +962,7 @@ geom_label(aes(label="model"), data=best_in_class, adjust_text={
 
 Note another handy technique used here: I added a second layer of large, hollow points to highlight the points that I've labelled.
 
-You can sometimes use the same idea to replace the legend with labels placed directly on the plot. It's not wonderful for this plot, but it isn't too bad.[^10]
+You can sometimes use the same idea to replace the legend with labels placed directly on the plot. It's not wonderful for this plot, but it isn't too bad.[^11]
 (`theme(legend_position="none"`) turns the legend off --- we'll talk about it more shortly.)
 
 ```{python}
@@ -1117,7 +1117,7 @@ geom_point() +\
 scale_y_continuous(breaks=range(15, 45, 5))
 ```
 
-You can use `labels` in the same way (a list of strings the same length as `breaks`), but you can also suppress the labels altogether by passing a list of empty strings. This is useful for maps, or for publishing plots where you can't share the absolute numbers. Note that the list of labels needs to be of the same length as the list of values, so a helper function like `no_labels` is convenient[^11]:
+You can use `labels` in the same way (a list of strings the same length as `breaks`), but you can also suppress the labels altogether by passing a list of empty strings. This is useful for maps, or for publishing plots where you can't share the absolute numbers. Note that the list of labels needs to be of the same length as the list of values, so a helper function like `no_labels` is convenient[^12]:
 
 ```{python}
 def no_labels(values):
@@ -1445,7 +1445,7 @@ It's also possible to control individual components of each theme, like the size
 
 ## [28.7](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots)&nbsp;&nbsp;&nbsp;Saving your plots
 
-The best way to get your plots out of Python and into your final write-up[^12]
+The best way to get your plots out of Python and into your final write-up[^13]
 is with the `.save()` method. There's also the `ggsave()` function, but the plotnine documentation doesn't recommend using this. The `.save()` method will save the plot to disk. In a Jupyter Notebook you can refer to the last returned value using `_`. Alternatively you first assing your plot to a variable.
 
 ```{python}
@@ -1494,14 +1494,15 @@ Unfortunately, the book is not available online for free, although you can find 
 ## Footnotes
 
 [^1]: There have been other attempts at porting ggplot2 to Python, such as [ggpy](https://github.com/yhat/ggpy), but as far as I know, these are no longer maintained.
-[^2]: It's important to note that this tutorial is not meant to compare Python and R. The never-ending flame wars between these two languages are boring and unproductive.
-[^3]: While it's generally to be considered bad practice to import everything into the global namespace, I think it's fine to do this in an ad-hoc environment such as a notebook as it makes using the many functions plotnine provides more convenient. An additional advantage is that the resulting code more closely resembles the original ggplot2 code. Alternatively, it's quite common to `import plotnine as p9` and prefix every function with `p9.`.
-[^4]: This tutorial was compiled with a [fork from version 0.6.0](https://github.com/jeroenjanssens/plotnine) that fixes an [issue](https://github.com/has2k1/plotnine/pull/325) related to using `ha` and `va` in `aes()`.
-[^5]: If you dislike the continuation character `\` then an alternative syntax is to wrap the entire expression in parentheses so that it's not needed.
-[^6]: The original text uses the `class` variable, but to demonstrate the same effect we need to use a variable with more distinct values because plotnine supports more shapes than ggplot2.
-[^7]: The original text has an additional exercise that contains code which is semantically wrong on purpose, but in plotnine, the corresponding code is also syntactically wrong. The reason is that in plotnine, you can only use column names in the aesthetic mapping and not literal values, e.g., `aes(color="blue")`.
-[^8]: ggplot2 also has `coord_quickmap()` for producing maps with the correct aspect ratio and `coord_polar()` for using polar coordinates. plotnine doesn't yet have these two functions.
-[^9]: In ggplot2, you can also use `labs()` to add a subtitle and a caption.
-[^10]: We have to use `geom_point()` twice here because of an [issue](https://github.com/has2k1/plotnine/issues/324) with the adjustText package.
-[^11]: In ggplot2 you can write `labels = NULL` so you don't need a helper function.
-[^12]: The original text discusses how to include your plot in R Markdown. While it's possible to include Python code and graphics in an R Markdown document through the [`reticulate` package](https://rstudio.github.io/reticulate/), like this tutorial demonstrates, it's beyond the scope of this text. If you're interested, you can have a look at the [Github repository](https://github.com/datascienceworkshops/r4ds-python-plotnine) related to this tutorial, which includes the .Rmd source.
+[^2]: If you ever need to translate ggplot2 to plotnine yourself, check out my [follow-up post containing heuristics](/blog/heuristics-for-translating-ggplot2-to-plotnine) for doing so.
+[^3]: It's important to note that this tutorial is not meant to compare Python and R. The never-ending flame wars between these two languages are boring and unproductive.
+[^4]: While it's generally considered to be bad practice to import everything into the global namespace, I think it's fine to do this in an ad-hoc environment such as a notebook as it makes using the many functions plotnine provides more convenient. An additional advantage is that the resulting code more closely resembles the original ggplot2 code. Alternatively, it's quite common to `import plotnine as p9` and prefix every function with `p9.`.
+[^5]: This tutorial was compiled with a [fork from version 0.6.0](https://github.com/jeroenjanssens/plotnine) that fixes an [issue](https://github.com/has2k1/plotnine/pull/325) related to using `ha` and `va` in `aes()`.
+[^6]: If you dislike the continuation character `\` then an alternative syntax is to wrap the entire expression in parentheses so that it's not needed.
+[^7]: The original text uses the `class` variable, but to demonstrate the same effect we need to use a variable with more distinct values because plotnine supports more shapes than ggplot2.
+[^8]: The original text has an additional exercise that contains code which is semantically wrong on purpose, but in plotnine, the corresponding code is also syntactically wrong. The reason is that in plotnine, you can only use column names in the aesthetic mapping and not literal values, e.g., `aes(color="blue")`.
+[^9]: ggplot2 also has `coord_quickmap()` for producing maps with the correct aspect ratio and `coord_polar()` for using polar coordinates. plotnine doesn't yet have these two functions.
+[^10]: In ggplot2, you can also use `labs()` to add a subtitle and a caption.
+[^11]: We have to use `geom_point()` twice here because of an [issue](https://github.com/has2k1/plotnine/issues/324) with the adjustText package.
+[^12]: In ggplot2 you can write `labels = NULL` so you don't need a helper function.
+[^13]: The original text discusses how to include your plot in R Markdown. While it's possible to include Python code and graphics in an R Markdown document through the [`reticulate` package](https://rstudio.github.io/reticulate/), like this tutorial demonstrates, it's beyond the scope of this text. If you're interested, you can have a look at the [Github repository](https://github.com/datascienceworkshops/r4ds-python-plotnine) related to this tutorial, which includes the .Rmd source.

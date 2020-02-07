@@ -67,8 +67,8 @@ knitr::include_graphics("images/cover.png")
 <img src="../input/images/cover.png" width="250" style="margin-left: 0px;">
 <!-- END_HIDE_MD -->
 
-All I had to do was translate the visualization chapters (chapter 3 and 28) from R and ggplot2 to Python and plotnine.
-I would like thank Hadley, Garrett, and O'Reilly Media, for granting me permission to do so.
+All I had to do was translate[^](If you ever need to translate ggplot2 to plotnine yourself, check out my [follow-up post containing heuristics](/blog/heuristics-for-translating-ggplot2-to-plotnine) for doing so.) the visualization chapters (chapter 3 and 28) from R and ggplot2 to Python and plotnine.
+I would like to thank Hadley, Garrett, and O'Reilly Media, for granting me permission to do so.
 Translating an existing text is quicker than writing a new one, and has the benefit that it becomes possible to compare both the syntax and coverage of plotnine to ggplot2.
 
 However, while quicker, translating is not always straightforward.
@@ -103,7 +103,7 @@ If you'd like to learn more about the theoretical underpinnings of plotnine befo
 
 ### [3.1.1](https://r4ds.had.co.nz/data-visualisation.html#prerequisites-1)&nbsp;&nbsp;&nbsp;Prerequisites
 
-This tutorial focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this tutorial, import[^](While it's generally to be considered bad practice to import everything into the global namespace, I think it's fine to do this in an ad-hoc environment such as a notebook as it makes using the many functions plotnine provides more convenient. An additional advantage is that the resulting code more closely resembles the original ggplot2 code. Alternatively, it's quite common to `import plotnine as p9` and prefix every function with `p9.`.) the necessary packages by running this code:
+This tutorial focusses on plotnine. We'll also use a little numpy and pandas for data manipulation. To access the datasets, help pages, and functions that we will use in this tutorial, import[^](While it's generally considered to be bad practice to import everything into the global namespace, I think it's fine to do this in an ad-hoc environment such as a notebook as it makes using the many functions plotnine provides more convenient. An additional advantage is that the resulting code more closely resembles the original ggplot2 code. Alternatively, it's quite common to `import plotnine as p9` and prefix every function with `p9.`.) the necessary packages by running this code:
 
 ```{python import}
 from plotnine import *
